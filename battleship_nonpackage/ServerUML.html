@@ -1,0 +1,56 @@
+@startuml
+
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+title BattleShip SingletonServer
+
+header
+<font color=red>Warning:</font>
+Do not use in production.
+endheader
+center footer Generated for demonstration
+
+
+class ClientHandler{
+	- clients : ArrayList<ClientHandler>
+	- server1 : SingletonServer
+	- observer : RoomObserver
+}
+
+interface Subject{
+}
+	class SingletonServer{
+		- serverOnlyOne : SingletonServer
+		- roomObservers : ArrayList<RoomObserver>
+	}
+interface Observer{
+}
+	class RoomObserver{
+		- ships : ArrayList<Ship>
+		- players : ArrayList<GamePlayer>
+		- clientsInRoom : ArrayList<ClientHandler>
+	}
+class GamePlayer{
+	- ships : ArrayList<Ship> 
+	- map : Map
+}
+class Map{
+}
+class Ship{
+}
+
+SingletonServer .up.> Subject
+SingletonServer -right- RoomObserver
+
+RoomObserver .up.> Observer
+ClientHandler -up- SingletonServer
+ClientHandler -up- RoomObserver
+
+GamePlayer "1"*-up-"n" Ship
+GamePlayer "1"*-up-"1" Map
+RoomObserver "1"*-right-"n" GamePlayer
+
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+
+
+
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+title BattleShip GameClient
+
+header
+<font color=red>Warning:</font>
+Do not use in production.
+endheader
+center footer Generated for demonstration
+
+class GameWindows{
+	~ loginWindow : LoginWindow
+	~ newAccountForm : NewAccountForm
+	~ passwordLostForm : PasswordLostForm
+	~ waitRoom : WaitRoom
+	~ playRoom : PlayRoom
+	~ client : SimpleChatClient
+}
+
+class LoginWindow{
+	~ windows : GameWindows
+}
+class NewAccountForm{
+	~ windows : GameWindows
+}
+class PasswordLostForm{
+	~ windows : GameWindows
+}
+class WaitRoom{
+	~ windows : GameWindows
+	~ rooms : JPanel
+}
+class Room{
+}
+class PlayRoom{
+	~ windows : GameWindows
+}
+class SimpleChatClient{
+	~ windows : GameWindows
+}
+
+
+
+GameWindows -down- LoginWindow
+GameWindows -down- NewAccountForm
+GameWindows -down- PasswordLostForm
+GameWindows -up- WaitRoom
+GameWindows -up- PlayRoom
+GameWindows -up- SimpleChatClient
+
+WaitRoom "1"*-right-"20" Room
+
+@enduml
