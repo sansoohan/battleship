@@ -5,12 +5,20 @@ gameclient.jar 실행
 ------------------
 jar파일을 더블클릭을 하셔도 되고 명령창에 java -jar gameclient.jar라고 입력하셔도 됩니다.
 
-
 gameserver.jar 실행
 -------------------
 jar파일을 더블클릭을 하셔도 되고 명령창에 java -jar gameserver.jar라고 입력하셔도 됩니다.
 gameserver같은 경우에는 더블클릭으로 실행하면 백그라운드에서 돌기 때문에 종료할 때 번거롭습니다.
  명령창에서 실행하실 것을 권합니다.
+
+
+GameClient.png
+---------------
+클라이언트 프로그램의 클래스 다이어그램입니다.
+
+GameServer.png
+---------------
+서버 프로그램의 클래스 다이어그램입니다.
 
 battleship_nonpackage
 ------------------
