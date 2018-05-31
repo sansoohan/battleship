@@ -1,8 +1,7 @@
 /*
-src> javac -encoding utf8 -d ../classes ga/ndss/*.java
-src> cd ../classes
-classes> jar -cvmf manifest.txt gameclient.jar . ../images/
-classes> java -jar gameclient.jar
+BattleshipClient> mvn compile
+BattleshipClient> mvn package
+BattleshipClient> java -jar target/BattleshipClient-1.0-SNAPSHOT.jar
 */
 
 package ga.ndss;
