@@ -65,10 +65,6 @@ BattleshipServer> mvn compile<br>
 BattleshipServer> mvn package<br>
 BattleshipServer> java -jar target/BattleshipServer-1.0-SNAPSHOT.jar<br>
 
-주의사항
--------------------
-UTF-8 인코딩이면 자바컴파일 시 아래처럼 인코딩옵션을 줘야 합니다.<br>
-
 제작자 컨택
 -------------------
 name : 한산수<br>
