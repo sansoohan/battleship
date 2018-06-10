@@ -1,0 +1,35 @@
+repositories {
+	mavenCentral()
+}
+buildDir = "./target"
+
+apply plugin: "java"
+
+configurations{
+	myConfig
+}
+
+dependencies {
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+sourceSets {
+	main.java.srcDirs = ["src/main"]
+	test{
+		java.srcDir "src/test"
+	}
+}
+
+jar {
+	from configurations.compile.collect{zipTree it}
+	from configurations.compile.collect{fileTree("resources")}
+	manifest.attributes "Main-Class": "ga.ndss.VerySimpleChatServer"
+}
+
+task runJar(type: Exec, dependsOn: jar){
+	executable 'java'
+	args '-jar', "$jar.archivePath"
+}
+
+//https://docs.gradle.org/current/dsl/
