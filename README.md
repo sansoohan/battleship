@@ -50,20 +50,26 @@ classes> jar -cvmf manifest.txt gameclient.jar .<br>
 classes> java -jar gameserver.jar<br>
 
 
-battleship_maven_package
+battleship_maven_gradle_package
 ------------------
 소스 문자포멧 UTF-8<br>
 TDD를 고려해서 만들 생각입니다.<br>
 
-클라이언트 컴파일/빌드/실행<br>
+maven으로 클라이언트 컴파일/빌드/실행<br>
 BattleshipClient> mvn compile<br>
 BattleshipClient> mvn package<br>
 BattleshipClient> java -jar target/BattleshipClient-1.0-SNAPSHOT.jar<br>
 
-서버 컴파일/빌드/실행<br>
+maven으로 서버 컴파일/빌드/실행<br>
 BattleshipServer> mvn compile<br>
 BattleshipServer> mvn package<br>
 BattleshipServer> java -jar target/BattleshipServer-1.0-SNAPSHOT.jar<br>
+
+gradle로 클라이언트 컴파일/빌드/실행<br>
+BattleshipClient> gradle runJar<br>
+
+gradle로 서버 컴파일/빌드/실행<br>
+BattleshipServer> gradle runJar<br>
 
 제작자 컨택
 -------------------
