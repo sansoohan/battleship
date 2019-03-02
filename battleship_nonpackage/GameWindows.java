@@ -13,19 +13,19 @@ public class GameWindows{
     public static void main(String[] args) {
         GameWindows windows = new GameWindows();
     }
-    // ¼­¹ö¼±ÅÃÃ¢
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¢
     ServerSelectForm serverSelect;
-    // ·Î±×ÀÎÃ¢
+    // ï¿½Î±ï¿½ï¿½ï¿½Ã¢
     LoginWindow loginWindow;
-    // È¸¿ø°¡ÀÔ¾ç½Ä
+    // È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½
     NewAccountForm newAccountForm;
-    // ÆÐ½º¿öµåºÐ½Ç¾ç½Ä
+    // ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½Ç¾ï¿½ï¿½
     PasswordLostForm passwordLostForm;
-    // ´ë±â½Ç
+    // ï¿½ï¿½ï¿½ï¿½
     WaitRoom waitRoom;
-    // °ÔÀÓ¹æ
+    // ï¿½ï¿½ï¿½Ó¹ï¿½
     PlayRoom playRoom;
-    // ¼­¹ö¿Í ¸Þ½ÃÁö ±³È¯.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯.
     SimpleChatClient client;
     public GameWindows(){
         serverSelect = new ServerSelectForm(this);
@@ -37,17 +37,17 @@ public class GameWindows{
         client = new SimpleChatClient(waitRoom.publicChatArea,this);
     }
 }
-// °ÔÀÓ¹æ
+// ï¿½ï¿½ï¿½Ó¹ï¿½
 class PlayRoom extends JFrame{
-    // °´Ã¼°£ ¸Þ½ÃÁö Àü¼Û
+    // ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     GameWindows windows;
     private int roomNum;
 
     ArrayList<String> clientIDs = new ArrayList<String>();
-    // GUI ¸Ê
+    // GUI ï¿½ï¿½
     Picture pic = new Picture();
         String imageSource = "ship.png";
-        // ¿©±â¿¡ ¼­¹ö·Î ºÎÅÍ ¹ÞÀº ¸ÊÀÌ ÀúÀåµÈ´Ù.
+        // ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½.
         String[] grid = new String[49];
     
     Box rightBox = new Box(BoxLayout.Y_AXIS);
@@ -81,7 +81,7 @@ class PlayRoom extends JFrame{
         
         JFileChooser chooser = new JFileChooser();
 
-    // GUI°´Ã¼¿¬°á/ÀÌº¥Æ®¸®½º³Êµî·Ï
+    // GUIï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½/ï¿½Ìºï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
     public PlayRoom(GameWindows windows){
         this.windows = windows;
         saveObject.addActionListener(new saveO());
@@ -141,20 +141,20 @@ class PlayRoom extends JFrame{
         setBounds(0,0,1200,900);
         setVisible(false);
 
-        // ´ë±â½Ç°ú °ÔÀÓ¹æ ½ÃÀÛ À§Ä¡¸¦ È­¸éÀÇ ÇÑ °¡¿îµ¥·Î Á¶Á¤
+        // ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½Ó¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½îµ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // °ÔÀÓÆÇ ÃÊ±âÈ­
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
     public void resetGrid(){
         for(int i=0;i<49;i++){
             grid[i] = "[??]";
         }   
     }
-    // ¾Ö´Ï¸ÞÀÌ¼ÇÀ» À§ÇÑ ¹Ìµð ¸Ê. ¹Ìµð·Î ¾²±âº¸´Ù´Â, ½Ã°£ Èå¸§¿¡ µû¸¥ ¿¡´Ï¸ÞÀÌ¼ÇÀ¸·Î ¸¹ÀÌ ¾´´Ù.
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½. ï¿½Ìµï¿½ï¿½ ï¿½ï¿½ï¿½âº¸ï¿½Ù´ï¿½, ï¿½Ã°ï¿½ ï¿½å¸§ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     Sequencer sequencer;
         Sequence seq;
             Track track;
@@ -162,11 +162,11 @@ class PlayRoom extends JFrame{
                 int mySpotNum;
                 MidiEvent[][] midiEvents;
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç ±×¸®±â °úÁ¤1 : ¾Ö´Ï¸ÞÀÌ¼ÇÀ» µî·ÏÇÏ°í ½ÇÇàÇÑ´Ù.
-    // ¼­¹öÂÊ¿¡¼­ Àü¼Û¹ÞÀº ÀÚ½ÅÀÇ ¹è ÁÂÇ¥¸¦ º¸¿©ÁÙ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ¼ÂÆÃÇÏ°í ½ÇÇàÇÑ´Ù.
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½1 : ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¹ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     public void eventMidi(){
-        // ¾Ö´Ï¸ÞÀÌ¼ÇÀ» µî·ÏÇÒ ¶§ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» º¸¿©ÁÙ ÁÂÇ¥¸¦ int[]ÇüÀ¸·Î ¹Ù²ã¼­ µî·ÏÇØÁà¾ß ÇÑ´Ù.
-        // int[]ÀÇ Å©±â È®º¸.
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ int[]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ã¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+        // int[]ï¿½ï¿½ Å©ï¿½ï¿½ È®ï¿½ï¿½.
         int count=0;
         for(int i=0;i<grid.length;i++){
             if(grid[i].equals("[ME]")){
@@ -174,7 +174,7 @@ class PlayRoom extends JFrame{
             }
         }
         mySpotNum = count;
-        // int[]¿¡ ÀÚ½ÅÀÇ ÁÂÇ¥ ÀÎµ¦½º º¸°ü.
+        // int[]ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         int[] myspots = new int[count];
         midiEvents = new MidiEvent[FRAME][mySpotNum];
         for(int i=0,k=0;i<grid.length;i++){
@@ -190,11 +190,11 @@ class PlayRoom extends JFrame{
             seq = new Sequence(Sequence.PPQ,4);
             track = seq.createTrack();
             sequencer.setSequence(seq);
-            // i : ¾Ö´Ï¸ÞÀÌ¼Ç ÇÁ·¹ÀÓÀº 10°³
+            // i : ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½
             for(int i=0;i<FRAME;i++){
-                // j : ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ±×·ÁÁú ÁÂÇ¥µé
+                // j : ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½
                 for(int j=0;j<mySpotNum;j++){
-                    // ÇÁ·¹ÀÓÀÌ ±×·ÁÁö´Â ½Ã°£°ú ÁÂÇ¥µéÀ» µî·ÏÇÑ´Ù.
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
                     try{
                         MidiEvent midiEvent = new MidiEvent(new ShortMessage(176,1,myspots[j],i),i);
                         midiEvents[i][j] = midiEvent;
@@ -202,15 +202,15 @@ class PlayRoom extends JFrame{
                     }catch(Exception e){}
                 }
             }
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ¹Ýº¹ Àç»ýÀ¸·Î ¼³Á¤
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ýºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             sequencer.setLoopCount(sequencer.LOOP_CONTINUOUSLY);
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
             sequencer.start();
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ºü¸£±â ¼³Á¤
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             sequencer.setTempoInBPM(60*10);
         }catch(Exception e){}
     }
-    // °ÔÀÓÀ» Àç½ÃÀÛ ÇÏ±â À§ÇØ¼­ µî·ÏÇØ ³õÀº ¹Ìµð ÀÌº¥Æ®µéÀ» ÀüºÎ Áö¿î´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
     public void resetMidi(){
         sequencer.stop();
         for(int i=0;i<FRAME;i++){
@@ -224,22 +224,22 @@ class PlayRoom extends JFrame{
         pic.repaint();
     }
     class Picture extends JPanel implements ControllerEventListener{
-        // inst´Â HashSetÀ¸·Î addÇÏ¿© Áßº¹ÁÂÇ¥ ÀúÀåÀ» ¹æÁöÇÑ´Ù.
+        // instï¿½ï¿½ HashSetï¿½ï¿½ï¿½ï¿½ addï¿½Ï¿ï¿½ ï¿½ßºï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         HashSet<Integer> inst = new HashSet<Integer>();
-        // pit´Â ÇÁ·¹ÀÓº° ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Ç¥½ÃÇÑ´Ù.
+        // pitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ñ´ï¿½.
         int pit=0;
         public Picture() {
-            // ¸¶¿ì½º·ÎºÎÅÍ ÁÂÇ¥ ÀÔ·ÂÀ» ¹Þ´Â´Ù.
+            // ï¿½ï¿½ï¿½ì½ºï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Þ´Â´ï¿½.
             addMouseListener(new MyMouseListener());
             setSize(new Dimension(1024,900));
         }
         class MyMouseListener extends MouseAdapter {
-            // ¸¶¿ì½º Å¬¸¯ ¸®½º³Ê
+            // ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             public void mouseClicked(MouseEvent e) {
-                // ¸¶¿ì½º¿¡ ÇØ´çÇÏ´Â °ÝÀÚ±¸°£À» ±¸ÇØ¼­,
+                // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½,
                 int location = gridize(e.getPoint());
                 if(location>=0){
-                    // ¼­¹ö¿¡ °ø°Ý ¸í·É¾î·Î Àü¼ÛÇÑ´Ù.
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
                     try {
                         windows.client.getWriter().println("/attack "+new DecimalFormat("00").format(location));
                         windows.client.getWriter().flush();
@@ -247,7 +247,7 @@ class PlayRoom extends JFrame{
                 }
             }
         }
-        // ¸¶¿ì½º·Î ÀÔ·Â¹ÞÀº ÁÂÇ¥¸¦ ¸ÊÁÂÇ¥À¸·Î ¹Ù²Û´Ù.
+        // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½Ô·Â¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Û´ï¿½.
         public int gridize(Point p){
             int r=96;
             int x0=172;
@@ -273,22 +273,22 @@ class PlayRoom extends JFrame{
             }
             return raw*7+col;
         }
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ±×¸®±â °úÁ¤2 : ¾Ö´Ï¸ÞÀÌ¼Ç º¯È­¸¦ ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
-        // ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ º¯È­µÉ ¶§¸¶´Ù ½ÇÇà. ¸Å¿ì ÂªÀº °£°ÝÀ¸·Î ½ÇÇàµÈ´Ù. pit°ú inst¿¡ ÀúÀåÇÑ ÈÄ repaint();
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2 : ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ñ´ï¿½.
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Å¿ï¿½ Âªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½. pitï¿½ï¿½ instï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ repaint();
         public void controlChange(ShortMessage event){
             this.inst.add(event.getData1());
             this.pit = event.getData2();
             // refresh.
             repaint();
         }
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ±×¸®±â °úÁ¤3 : Graphics°¡ ±×¸°´Ù.
-        // ±×¸®±â Åø·Î ±×¸°´Ù.
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½3 : Graphicsï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½.
+        // ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½.
         public void paintComponent(Graphics g) {
-            // º¸µå¸¦ ±×¸°´Ù.
+            // ï¿½ï¿½ï¿½å¸¦ ï¿½×¸ï¿½ï¿½ï¿½.
             super.paintComponent(g);
             Image img1 = new ImageIcon("board.jpg").getImage();
             g.drawImage(img1,0,0,this);
-            // ¸íÁßÇÑ ¹è¸¦ ±×¸°´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¸¦ ï¿½×¸ï¿½ï¿½ï¿½.
             for (int i = 0; i < grid.length; i++) {
                 if(grid[i]==null){
                     continue;
@@ -302,7 +302,7 @@ class PlayRoom extends JFrame{
                     g.drawImage(img3,172+i%7*96+8,98+i/7*96+31,this);
                 }    
             }
-            // ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ±×¸°´Ù.
+            // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½.
             for(Iterator<Integer> it = inst.iterator();it.hasNext();){
                 int num=it.next();
                 g.setColor(Color.yellow);
@@ -310,9 +310,9 @@ class PlayRoom extends JFrame{
             }
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class RoomChatEnterKey extends KeyAdapter {
-        // ¿£ÅÍÅ°¸¦ ÀÔ·ÂÇÏ¸é ¸Þ½ÃÁö Àü¼Û¹öÆ°ÀÌ Å¬¸¯µÈ´Ù. => roomChatField ¿¡¼­ ÀÛµ¿ÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¸ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¹ï¿½Æ°ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½È´ï¿½. => roomChatField ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½Ñ´ï¿½.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -324,22 +324,22 @@ class PlayRoom extends JFrame{
                 sendMessageRoom.doClick();
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class RoomSendButton implements ActionListener{
-        // ¹öÆ°À» ´©¸£¸é roomChatField¸¦ ÀÐ¾î¼­ ¸Þ½ÃÁö Àü¼ÛÇÑ´Ù.
+        // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ roomChatFieldï¿½ï¿½ ï¿½Ð¾î¼­ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(roomChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ³»¿ëÀ» Áö¿ì°í Ä¿¼­¸¦ ¿Å±ä´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½Å±ï¿½ï¿½.
             roomChatField.setText("");
             roomChatField.requestFocus();
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class ExitRoomButton implements ActionListener{
-        // ¹öÆ°Àº ´©¸£¸é /leave ¸Þ½ÃÁö¸¦ Àü¼Û
+        // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ /leave ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/leave");
@@ -347,9 +347,9 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class ReadyRoomButton implements ActionListener{
-        // ¹öÆ°Àº ´©¸£¸é /ready ¸Þ½ÃÁö¸¦ Àü¼Û
+        // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ /ready ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/ready");
@@ -357,9 +357,9 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class StartRoomButton implements ActionListener{
-        // ¹öÆ°Àº ´©¸£¸é /ready ¸Þ½ÃÁö¸¦ Àü¼Û
+        // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ /ready ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/start");
@@ -367,27 +367,27 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class selectButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class saveO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class loadO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class saveT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class loadT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
@@ -402,11 +402,11 @@ class PlayRoom extends JFrame{
         return playerIDs;
     }
 }
-// ´ë±â½Ç
+// ï¿½ï¿½ï¿½ï¿½
 class WaitRoom extends JFrame{
-    // °´Ã¼°£ ¸Þ½ÃÁö Àü¼Û
+    // ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     GameWindows windows;    
-    // GUI¸Ê
+    // GUIï¿½ï¿½
     Box publicChat = new Box(BoxLayout.Y_AXIS);
         JTextArea publicChatArea = new JTextArea(10,50);
         Box chatBoxPublic = new Box(BoxLayout.X_AXIS);
@@ -444,9 +444,9 @@ class WaitRoom extends JFrame{
         scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         rooms.setOpaque(true);
         rooms.setBackground(Color.BLUE);
-        // °ÝÀÚ°ø°£À» 10,2 ·Î »óÇÏ10, ÁÂ¿ì10 °£°ÝÀ¸·Î ¹èÄ¡.
+        // ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ 10,2 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½10, ï¿½Â¿ï¿½10 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡.
         rooms.setLayout(new GridLayout(10,2,10,10));
-        // °ÝÀÚ°ø°£¿¡ °ÔÀÓ¹æ 20°³¸¦ Ã¤¿ö³Ö´Â´Ù.
+        // ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¹ï¿½ 20ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½Ö´Â´ï¿½.
         for(int i=1;i<=20;i++)
             rooms.add(new Room(i,windows));
 
@@ -456,16 +456,16 @@ class WaitRoom extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1200,900);
 
-        // ´ë±â½Ç°ú °ÔÀÓ¹æ ½ÃÀÛ À§Ä¡¸¦ È­¸éÀÇ ÇÑ °¡¿îµ¥·Î Á¶Á¤
+        // ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½Ó¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½îµ¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class PublicChatEnterKey extends KeyAdapter {
-        // ¿£ÅÍÅ°¸¦ ÀÔ·ÂÇÏ¸é ¸Þ½ÃÁö Àü¼Û¹öÆ°ÀÌ Å¬¸¯µÈ´Ù. => publicChatField ¿¡¼­ ÀÛµ¿ÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¸ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¹ï¿½Æ°ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½È´ï¿½. => publicChatField ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½Ñ´ï¿½.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -477,21 +477,21 @@ class WaitRoom extends JFrame{
                 sendMessagePublic.doClick();
         }
     }
-    // ÀÌº¥Æ® ¸®½º³Ê µî·ÏÀ» À§ÇÑ Å¬·¡½º
+    // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     class PublicSendButton implements ActionListener{
-        // ¹öÆ°À» ´©¸£¸é publicChatField ÀÐ¾î¼­ ¸Þ½ÃÁö Àü¼ÛÇÑ´Ù.
+        // ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ publicChatField ï¿½Ð¾î¼­ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(publicChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ³»¿ëÀ» Áö¿ì°í Ä¿¼­¸¦ ¿Å±ä´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½Å±ï¿½ï¿½.
             publicChatField.setText("");
             publicChatField.requestFocus();
         }
     }
 }
-// ´ë±â½Ç¿¡ µé¾î°¡´Â °ÔÀÓ¹æ»óÅÂÃ¢
+// ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½Ã¢
 class Room extends JPanel implements ActionListener{
     ArrayList<JLabel> labelList = new ArrayList<JLabel>();
     GameWindows windows;
@@ -504,27 +504,27 @@ class Room extends JPanel implements ActionListener{
         this.windows = windows;
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
-        // 3,3 °ÝÀÚ°ø°£À» »óÇÏ5, ÁÂ¿ì5ÀÇ °£°ÝÀ¸·Î ¹èÄ¡
+        // 3,3 ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½5, ï¿½Â¿ï¿½5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
         this.setLayout(new GridLayout(3,3,5,5));
         JLabel roomLabel = new JLabel("Room "+new DecimalFormat("000").format(roomNum));
         roomLabel.setForeground(Color.YELLOW);
-        //¸®½º³Ê´Â µÎ°¡Áö ¹æ¹ýÀ¸·Î µî·Ï °¡´É.
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         join.addActionListener(this);
         make.addActionListener(new MakeRoomButton());
 
-        // 9°³ÀÇ °ÝÀÚ°ø°£Áß 3°³´Â ¹öÆ°°ú ¹æ¹øÈ£,
+        // 9ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½È£,
         this.add(roomLabel);
         this.add(make);
         this.add(join);
-        // ³ª¸ÓÁö 6°³´Â ¹æ¿¡ Á¢¼ÓÇÑ »ç¶÷ÀÇ ÀÌ¸§À» º¸¿©ÁØ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 6ï¿½ï¿½ï¿½ï¿½ ï¿½æ¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
         for(int i=1;i<=6;i++){
             JLabel newLabel = new JLabel("");
-            // 0,2,4¹øÀº ³ë¶õ»ö
+            // 0,2,4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
             if(i%2==0){
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.YELLOW);
             }
-            // 1,3,5¹øÀº ÁÖÈ²»ö
+            // 1,3,5ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²ï¿½ï¿½
             else{
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.ORANGE);
@@ -553,14 +553,14 @@ class Room extends JPanel implements ActionListener{
             }
         }
     }
-    // ¸®½º³Ê¸¦ ³Ö´Â Ã¹¹øÂ° ¹æ¹ý : implements ActionListener
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ ï¿½Ö´ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ : implements ActionListener
     public void actionPerformed(ActionEvent ev){
         try {
             windows.client.getWriter().println("/join "+ new DecimalFormat("000").format(roomNum));
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // ¸®½º³Ê¸¦ ³Ö´Â µÎ¹øÂ° ¹æ¹ý : inner class
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ ï¿½Ö´ï¿½ ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½ : inner class
     class MakeRoomButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
             try {
@@ -577,9 +577,9 @@ class Room extends JPanel implements ActionListener{
     }
 }
 
-// ¹è ±×¸²ÀÌ ÀÖ´Â ±âº» Å×¸¶.
+// ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½âº» ï¿½×¸ï¿½.
 abstract class LoginThema extends JFrame{
-    // °´Ã¼°£ ¸Þ½ÃÁö Àü¼Û
+    // ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     GameWindows windows;
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     Dimension fr = super.getSize();
@@ -594,14 +594,14 @@ abstract class LoginThema extends JFrame{
         getContentPane().add(BorderLayout.CENTER, pic);
     }
     Picture pic = new Picture();
-    // JPanelÀ» È®ÀåÇØ¼­ ±×¸®±â ÅøÀ» °¡Á®¿Â´Ù.
+    // JPanelï¿½ï¿½ È®ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
     class Picture extends JPanel{
         public Picture() {
             setLocationRelativeTo(this);
             setSize(new Dimension(400,200));
             repaint();
         }
-        // ¹è±×¸²À» ±×¸°´Ù.
+        // ï¿½ï¿½×¸ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½.
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Image img1 = new ImageIcon("LoginShip.jpg").getImage();
@@ -609,9 +609,9 @@ abstract class LoginThema extends JFrame{
         }
     }
 }
-// ¼­¹ö¼±ÅÃ Ã¢.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢.
 class ServerSelectForm extends LoginThema implements ActionListener{
-    // GUI¸Ê
+    // GUIï¿½ï¿½
     Box serverSelectBox = new Box(BoxLayout.Y_AXIS);
         Box urlBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("Server URL : ");
@@ -650,17 +650,17 @@ class ServerSelectForm extends LoginThema implements ActionListener{
         this.setVisible(false);
         windows.client.setUpNetworking(serverURL.getText());
     }
-    // cancel¹öÆ°¿¡ µî·ÏÇÒ ÀÌº¥Æ® ¸®½º³Ê
+    // cancelï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     class ExitButton implements ActionListener{
-        // ÆÐ½º¿öµå ºÐ½Ç Ã¢À» ´Ý°í ·Î±×ÀÎÃ¢À» ¿¬´Ù.
+        // ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ Ã¢ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½Î±ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         public void actionPerformed(ActionEvent ev){
             System.exit(0);
         }
     }
 }
-// ·Î±×ÀÎ Ã¢.
+// ï¿½Î±ï¿½ï¿½ï¿½ Ã¢.
 class LoginWindow extends LoginThema implements ActionListener{
-    // GUI¸Ê
+    // GUIï¿½ï¿½
     Box loginBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -704,17 +704,17 @@ class LoginWindow extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, loginBox);
     }
-    // ÀÔ·ÂÈ®ÀÎ ¹öÆ°À» ´©¸£¸é ¼­¹ö·Î id/pass°¡ ¼­¹ö·Î Àü¼ÛµÈ´Ù.
+    // ï¿½Ô·ï¿½È®ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id/passï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÈ´ï¿½.
     public void actionPerformed(ActionEvent ev){
         try {   
             windows.client.getWriter().println("/login "+idTextField.getText()+" "+passwdTextField.getText());
-            windows.client.getWriter().flush();
+            // windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
-        // Ä¿¼­¸¦ ¿Å±ä´Ù.
+        // Ä¿ï¿½ï¿½ï¿½ï¿½ ï¿½Å±ï¿½ï¿½.
         passwdTextField.requestFocus();
     }
     class LoginButtonEnterKey extends KeyAdapter {
-        // ¿£ÅÍÅ°¸¦ ÀÔ·ÂÇÏ¸é ·Î±×ÀÎ ¹öÆ°ÀÌ Å¬¸¯µÈ´Ù. => roomChatField ¿¡¼­ ÀÛµ¿ÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½È´ï¿½. => roomChatField ï¿½ï¿½ï¿½ï¿½ ï¿½Ûµï¿½ï¿½Ñ´ï¿½.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -739,9 +739,9 @@ class LoginWindow extends LoginThema implements ActionListener{
         }
     }
 }
-// È¸¿ø°¡ÀÔ Ã¢.
+// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢.
 class NewAccountForm extends LoginThema implements ActionListener{
-    // GUI¸Ê
+    // GUIï¿½ï¿½
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -791,7 +791,7 @@ class NewAccountForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // ÀÔ·ÂÈ®ÀÎ ¹öÆ°À» ´©¸£¸é ¼­¹ö·Î id/pass/name/emailÀÌ ¼­¹ö·Î Àü¼ÛµÈ´Ù.
+    // ï¿½Ô·ï¿½È®ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id/pass/name/emailï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÈ´ï¿½.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/newaccount ";
         newAccount += idTextField.getText()+" ";
@@ -803,18 +803,18 @@ class NewAccountForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel¹öÆ°¿¡ µî·ÏÇÒ ÀÌº¥Æ® ¸®½º³Ê
+    // cancelï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     class CancelButton implements ActionListener{
-        // È¸¿ø°¡ÀÔÃ¢À» ´Ý°í ·Î±×ÀÎÃ¢À» ¿¬´Ù.
+        // È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½Î±ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.newAccountForm.setVisible(false);
         }
     }
 }
-// ÆÐ½º¿öµå ºÐ½Ç Ã¢.
+// ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ Ã¢.
 class PasswordLostForm extends LoginThema implements ActionListener{
-    // GUI¸Ê
+    // GUIï¿½ï¿½
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -850,7 +850,7 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // ÀÔ·ÂÈ®ÀÎ ¹öÆ°À» ´©¸£¸é ¼­¹ö·Î id/pass/name/emailÀÌ ¼­¹ö·Î Àü¼ÛµÈ´Ù.
+    // ï¿½Ô·ï¿½È®ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id/pass/name/emailï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÈ´ï¿½.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/passwdlost ";
         newAccount += idTextField.getText()+" ";
@@ -860,9 +860,9 @@ class PasswordLostForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel¹öÆ°¿¡ µî·ÏÇÒ ÀÌº¥Æ® ¸®½º³Ê
+    // cancelï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     class CancelButton implements ActionListener{
-        // ÆÐ½º¿öµå ºÐ½Ç Ã¢À» ´Ý°í ·Î±×ÀÎÃ¢À» ¿¬´Ù.
+        // ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð½ï¿½ Ã¢ï¿½ï¿½ ï¿½Ý°ï¿½ ï¿½Î±ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.passwordLostForm.setVisible(false);
@@ -871,7 +871,7 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 }
 class SimpleChatClient{
     private JTextArea incoming;
-    // °´Ã¼°£ ¸Þ½ÃÁö Àü¼Û
+    // ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private Thread readerThread;
     private GameWindows windows;
     private BufferedReader reader;
@@ -883,7 +883,7 @@ class SimpleChatClient{
         this.windows = windows;
         readerThread = new Thread(new IncomingReader());
     }
-    // ¼­¹ö¿Í ¿¬°áÇÏ°í ÀÔÃâ·Â ½ºÆ®¸²À» ÀúÀåÇÑ´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     public void setUpNetworking(String url) {
         try {
             sock = new Socket(url, 5000);
@@ -894,15 +894,15 @@ class SimpleChatClient{
         catch(IOException ex){ex.printStackTrace();}
         readerThread.start();
     }
-    // ¼­¹ö·ÎºÎÅÍ ¸Þ½ÃÁö¸¦ ¹Þ´Â ½º·¹µå.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     class IncomingReader implements Runnable {
         public void run() {
             String message;
             try {
-                // ¸Þ½ÃÁö°¡ ¾øÀ» ¶§±îÁö ÀÐ¾îµéÀÌ´Âµ¥,
+                // ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½Ì´Âµï¿½,
                 while ((message = reader.readLine()) != null) {
                     System.out.println("client read " + message);
-                    // '/' ·Î ½ÃÀÛÇÏ´Â ¸Þ½ÃÁö´Â ¸í·É¾î·Î °£ÁÖÇÏ°í Ã¤ÆÃÃ¢¿¡´Â Ç¥½ÃÇÏÁö ¾Ê´Â´Ù.
+                    // '/' ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.
                     if(message.charAt(0)=='/'){
                         if(message.indexOf("init")==1){initGrid(message);}
                         else if(message.indexOf("make")==1){makeRoom(message);}
@@ -914,126 +914,126 @@ class SimpleChatClient{
                         else if(message.indexOf("newaccount")==1){newAccount(message);}
                         else if(message.indexOf("clientstate")==1){clientState(message);}
                     }
-                    // ±×·¸Áö ¾ÊÀº ¸Þ½ÃÁö´Â ±×³É Ã¤ÆÃÃ¢¿¡ Ç¥½ÃÇÑ´Ù.
+                    // ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×³ï¿½ Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ñ´ï¿½.
                     else{
                         incoming.append(message + "\n");
                     }
                 }
             } catch (IOException ex){ex.printStackTrace();}
         }
-        // °ÔÀÓ½ÃÀÛ ½Ã¿¡ ¼­¹ö·ÎºÎÅÍ 49°³ ÁÂÇ¥°ªÀ» ¿¬¼ÓÀ¸·Î ¹Þ¾Æ¿Â´Ù.
+        // ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ 49ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½.
         public void initGrid(String message){
             windows.playRoom.grid[initCount] = message.substring(6,10);
             initCount++;
-            // 49°³¸¦ ´Ù ¹Þ¾ÒÀ¸¸é ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ½ÃÀÛÇÑ´Ù.
+            // 49ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Þ¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
             if(initCount==49){
                 windows.playRoom.eventMidi();
                 windows.playRoom.pic.repaint();
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â /make 000 À» º¸³»°í, ¼­¹ö·ÎºÎÅÍ /make 000 ok ¸¦ ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ /make 000 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /make 000 ok ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void makeRoom(String message){
             String[] makeMessages = message.split(" ");
             if(makeMessages[2].equals("ok")){
-                // ´ë±â½ÇÀ» Áö¿ì°í °ÔÀÓ·ëÀ» º¸¿©ÁØ´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Å¬¶óÀÌ¾ðÆ®°¡ ¼­¹ö·ÎºÎÅÍ ¹ÞÀº ¸Þ½ÃÁö¸¦ °ÔÀÓ·ëÀÇ Ã¤ÆÃÃ¢À¸·Î °¡°Ô²û º¯°æ.
+                // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â /join 000 À» º¸³»°í, ¼­¹ö·ÎºÎÅÍ /join 000 ok ¸¦ ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ /join 000 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /join 000 ok ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void joinRoom(String message){
-            // ¸Þ½ÃÁö¸¦ " "·Î ÂÉ°³¼­,
+            // ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ " "ï¿½ï¿½ ï¿½É°ï¿½ï¿½ï¿½,
             String[] joinMessages = message.split(" ");
             if(joinMessages[2].equals("ok")){
-                // ´ë±â½ÇÀ» Áö¿ì°í °ÔÀÓ·ëÀ» º¸¿©ÁØ´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Å¬¶óÀÌ¾ðÆ®°¡ ¼­¹ö·ÎºÎÅÍ ¹ÞÀº ¸Þ½ÃÁö¸¦ °ÔÀÓ·ëÀÇ Ã¤ÆÃÃ¢À¸·Î °¡°Ô²û º¯°æ.
+                // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â /leave ¸¦ º¸³»°í, ¼­¹ö·ÎºÎÅÍ /leave ok ¸¦ ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ /leave ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /leave ok ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void leaveRoom(String message){
             if(message.substring(7,9).equals("ok")){
-                // °ÔÀÓ·ëÀ» Áö¿ì°í ´ë±â½ÇÀ» º¸¿©ÁØ´Ù.
+                // ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
                 windows.waitRoom.setVisible(true);
                 windows.playRoom.setVisible(false);
-                // Å¬¶óÀÌ¾ðÆ®°¡ ¼­¹ö·ÎºÎÅÍ ¹ÞÀº ¸Þ½ÃÁö¸¦ ´ë±â½ÇÀÇ Ã¤ÆÃÃ¢À¸·Î °¡°Ô²û º¯°æ.
+                // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½.
                 incoming = windows.waitRoom.publicChatArea;
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â /attack 00 ¸¦ º¸³»°í, ¼­¹ö·ÎºÎÅÍ /attack 00 [??] ¸¦ ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ /attack 00 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /attack 00 [??] ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void fire(String message){
-            // 1.Å¬¶óÀÌ¾ðÆ®°¡ °ø°Ý ÁÂÇ¥¸¦ Àü¼Û.
-            // 2.¼­¹ö°¡ °ø°ÝÁÂÇ¥¿¡ µû¸¥ ÀûÁß¿©ºÎ ÆÄ¾Ç.
-            // 3.ÀûÁß°á°ú¸¦ ¸ðµç Å¬¶óÀÌ¾ðÆ®¿¡°Ô Àü¼Û.
+            // 1.Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+            // 2.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½Ä¾ï¿½.
+            // 3.ï¿½ï¿½ï¿½ß°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
             int location = Integer.parseInt(message.substring(8,10));
             windows.playRoom.grid[location] = message.substring(11,15);
             System.out.println(windows.playRoom.grid[location]);
             windows.playRoom.pic.repaint();
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â, ¼­¹ö·ÎºÎÅÍ /resetgame ok ¸¦ ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /resetgame ok ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void resetGame(String message){
             if(message.substring(11,13).equals("ok")){
-                // °ÝÀÚ¸¦ ÀüºÎ [??]·Î ¹Ù²Ù°í => °ø°Ý´çÇÑ ÁöÁ¡ÀÌ ÀüºÎ Áö¿öÁø´Ù.
+                // ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ [??]ï¿½ï¿½ ï¿½Ù²Ù°ï¿½ => ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                 windows.playRoom.resetGrid();
-                // ÀúÀåÇÑ ¾Ö´Ï¸ÞÀÌ¼Ç ÇÁ·¹ÀÓµéÀ» ¸ðµÎ Áö¿î´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
                 windows.playRoom.resetMidi();
-                // /init ¸Þ½ÃÁö¸¦ ¹Þ±â À§ÇØ¼­ 0À¸·Î ÃÊ±âÈ­ÇÑ´Ù.
+                // /init ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ñ´ï¿½.
                 initCount=0;
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®´Â /login id passwd¸¦ º¸³»°í, ¼­¹ö·ÎºÎÅÍ /login ok id name À» ±â´Ù¸°´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ /login id passwdï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ /login ok id name ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½.
         public void login(String message){
             String[] okMessages = message.split(" ");
-            // Á¢¼ÓÀÌ Àç´ë·Î ÀÌ·ç¾îÁö¸é ·Î±×ÀÎÃ¢À» Áö¿ì°í ´ë±â½ÇÀ» º¸¿©ÁØ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
             if(okMessages[1].equals("ok")){
                 windows.playRoom.userID.setText(okMessages[2]);
                 windows.playRoom.userName.setText(okMessages[3]);
                 windows.waitRoom.setVisible(true);
                 windows.loginWindow.setVisible(false);
             }
-            // ¼­¹ö·ÎºÎÅÍ id³ª password µÑ Áß¿¡ ÇÏ³ª¸¦ ÀÔ·ÂÇÏÁö ¾Ê¾Ò´Ù°í ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ idï¿½ï¿½ password ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´Ù°ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             else if(okMessages[1].equals("notentered")){
                 JOptionPane.showConfirmDialog(null,"Please enter ID and Password");
             }
-            // ¼­¹ö·ÎºÎÅÍ id³ª password °¡ Àß¸ø ÀÔ·ÂµÇ¾ú´Ù°í ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ idï¿½ï¿½ password ï¿½ï¿½ ï¿½ß¸ï¿½ ï¿½Ô·ÂµÇ¾ï¿½ï¿½Ù°ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             else if(okMessages[1].equals("mismatch")){
                 JOptionPane.showConfirmDialog(null,"Please check your ID and Password");
             }
         }
         public void newAccount(String message){
             String[] okMessages = message.split(" ");
-            // »õ·Î¿î °èÁ¤À» Á¤»óÀûÀ¸·Î ¸¸µé¾ú´Ù¸é, ¼­¹ö·ÎºÎÅÍ °èÁ¤»ý¼º ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             if(okMessages[1].equals("ok")){
                 JOptionPane.showConfirmDialog(null,"Success!");
             }
-            // ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµð¶ó°í, ¼­¹ö·ÎºÎÅÍ ¿¡·¯ ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             else if(okMessages[1].equals("idcollision")){
                 JOptionPane.showConfirmDialog(null,"The ID you entered is already exist");
             }
-            // ¾ÆÀÌµð Çü½ÄÀÌ ¸ÂÁö ¾Ê´Â´Ù°í, ¼­¹ö·ÎºÎÅÍ ¿¡·¯ ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´Ù°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             else if(okMessages[1].equals("idformaterror")){
                 JOptionPane.showConfirmDialog(null,"Special Character can't be used for ID");
             }
-            // ÀÌ¸ÞÀÏ Çü½ÄÀÌ ¸ÂÁö ¾Ê´Â´Ù°í, ¼­¹ö·ÎºÎÅÍ ¿¡·¯ ¸Þ½ÃÁö¸¦ ¹ÞÀ» ¼ö ÀÖ´Ù.
+            // ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´Ù°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
             else if(okMessages[1].equals("emailformaterror")){
                 JOptionPane.showConfirmDialog(null,"Email format is not good");
             }
         }
-        // Å¬¶óÀÌ¾ðÆ®°¡ ¹æ¿¡ µé¾î°¡°Å³ª ³ª¿Ã ¶§, ´ë±â½ÇÀ» ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+        // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½æ¿¡ ï¿½ï¿½î°¡ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ñ´ï¿½.
         public void clientState(String message){
             String stateMessages[] = message.split(" ");
             String clientID = stateMessages[1];
             int from = Integer.parseInt(stateMessages[3]);
             int to = Integer.parseInt(stateMessages[5]);
-            // Å¬¶óÀÌ¾ðÆ®°¡ °ÔÀÓ¹æ¿¡¼­ ´Ù¸¥ °÷À¸·Î ÀÌµ¿ÇÒ ¶§,
+            // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¹æ¿¡ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½,
             if(from!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(from-1)).removePlayer(clientID);
             }
-            // Å¬¶óÀÌ¾ðÆ®°¡ ´ë±â½Ç¿¡¼­ ´Ù¸¥ °÷À¸·Î ÀÌµ¿ÇÒ ¶§,
+            // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½,
             else{
                 for(int i=0;i<windows.waitRoom.clientIDs.size();i++){
                     if(windows.waitRoom.clientIDs.get(i).equals(clientID)){
@@ -1042,11 +1042,11 @@ class SimpleChatClient{
                     }
                 }
             }
-            // Å¬¶óÀÌ¾ðÆ®°¡ °ÔÀÓ¹æÀ¸·Î ÀÌµ¿ÇÒ ¶§,
+            // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½,
             if(to!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(to-1)).addPlayer(clientID);
             }
-            // Å¬¶óÀÌ¾ðÆ®°¡ ´ë±â½Ç·Î ÀÌµ¿ÇÒ ¶§,
+            // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½,
             else{
                 windows.waitRoom.clientIDs.add(clientID);
             }
