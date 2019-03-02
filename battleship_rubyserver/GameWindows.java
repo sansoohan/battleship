@@ -13,19 +13,12 @@ public class GameWindows{
     public static void main(String[] args) {
         GameWindows windows = new GameWindows();
     }
-    // ��������â
     ServerSelectForm serverSelect;
-    // �α���â
     LoginWindow loginWindow;
-    // ȸ�����Ծ��
     NewAccountForm newAccountForm;
-    // �н�����нǾ��
     PasswordLostForm passwordLostForm;
-    // ����
     WaitRoom waitRoom;
-    // ���ӹ�
     PlayRoom playRoom;
-    // ������ �޽��� ��ȯ.
     SimpleChatClient client;
     public GameWindows(){
         serverSelect = new ServerSelectForm(this);
@@ -36,18 +29,14 @@ public class GameWindows{
         playRoom = new PlayRoom(this);
         client = new SimpleChatClient(waitRoom.publicChatArea,this);
     }
-}
-// ���ӹ�
+
 class PlayRoom extends JFrame{
-    // ��ü�� �޽��� ����
     GameWindows windows;
     private int roomNum;
 
     ArrayList<String> clientIDs = new ArrayList<String>();
-    // GUI ��
     Picture pic = new Picture();
         String imageSource = "ship.png";
-        // ���⿡ ������ ���� ���� ���� ����ȴ�.
         String[] grid = new String[49];
     
     Box rightBox = new Box(BoxLayout.Y_AXIS);
@@ -81,7 +70,6 @@ class PlayRoom extends JFrame{
         
         JFileChooser chooser = new JFileChooser();
 
-    // GUI��ü����/�̺�Ʈ�����ʵ��
     public PlayRoom(GameWindows windows){
         this.windows = windows;
         saveObject.addActionListener(new saveO());
@@ -124,7 +112,6 @@ class PlayRoom extends JFrame{
         for(int i=0;i<6;i++){
             JLabel label = new JLabel();
             playerIDs.add(label);
-            // playersPanel.add(label);
         }
         rightBox.add(playersPanel);
         rightBox.add(help);
@@ -141,20 +128,17 @@ class PlayRoom extends JFrame{
         setBounds(0,0,1200,900);
         setVisible(false);
 
-        // ���ǰ� ���ӹ� ���� ��ġ�� ȭ���� �� ����� ����
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // ������ �ʱ�ȭ
     public void resetGrid(){
         for(int i=0;i<49;i++){
             grid[i] = "[??]";
         }   
     }
-    // �ִϸ��̼��� ���� �̵� ��. �̵�� ���⺸�ٴ�, �ð� �帧�� ���� ���ϸ��̼����� ���� ����.
     Sequencer sequencer;
         Sequence seq;
             Track track;
@@ -162,11 +146,7 @@ class PlayRoom extends JFrame{
                 int mySpotNum;
                 MidiEvent[][] midiEvents;
 
-    // �ִϸ��̼� �׸��� ����1 : �ִϸ��̼��� ����ϰ� �����Ѵ�.
-    // �����ʿ��� ���۹��� �ڽ��� �� ��ǥ�� ������ �ִϸ��̼��� �����ϰ� �����Ѵ�.
     public void eventMidi(){
-        // �ִϸ��̼��� ����� �� �ִϸ��̼��� ������ ��ǥ�� int[]������ �ٲ㼭 �������� �Ѵ�.
-        // int[]�� ũ�� Ȯ��.
         int count=0;
         for(int i=0;i<grid.length;i++){
             if(grid[i].equals("[ME]")){
@@ -174,7 +154,6 @@ class PlayRoom extends JFrame{
             }
         }
         mySpotNum = count;
-        // int[]�� �ڽ��� ��ǥ �ε��� ����.
         int[] myspots = new int[count];
         midiEvents = new MidiEvent[FRAME][mySpotNum];
         for(int i=0,k=0;i<grid.length;i++){
@@ -190,11 +169,8 @@ class PlayRoom extends JFrame{
             seq = new Sequence(Sequence.PPQ,4);
             track = seq.createTrack();
             sequencer.setSequence(seq);
-            // i : �ִϸ��̼� �������� 10��
             for(int i=0;i<FRAME;i++){
-                // j : �ִϸ��̼��� �׷��� ��ǥ��
                 for(int j=0;j<mySpotNum;j++){
-                    // �������� �׷����� �ð��� ��ǥ���� ����Ѵ�.
                     try{
                         MidiEvent midiEvent = new MidiEvent(new ShortMessage(176,1,myspots[j],i),i);
                         midiEvents[i][j] = midiEvent;
@@ -202,15 +178,11 @@ class PlayRoom extends JFrame{
                     }catch(Exception e){}
                 }
             }
-            // �ִϸ��̼� �ݺ� ������� ����
             sequencer.setLoopCount(sequencer.LOOP_CONTINUOUSLY);
-            // �ִϸ��̼� ����
             sequencer.start();
-            // �ִϸ��̼� ������ ����
             sequencer.setTempoInBPM(60*10);
         }catch(Exception e){}
     }
-    // ������ ����� �ϱ� ���ؼ� ����� ���� �̵� �̺�Ʈ���� ���� �����.
     public void resetMidi(){
         sequencer.stop();
         for(int i=0;i<FRAME;i++){
@@ -224,22 +196,16 @@ class PlayRoom extends JFrame{
         pic.repaint();
     }
     class Picture extends JPanel implements ControllerEventListener{
-        // inst�� HashSet���� add�Ͽ� �ߺ���ǥ ������ �����Ѵ�.
         HashSet<Integer> inst = new HashSet<Integer>();
-        // pit�� �����Ӻ� �ִϸ��̼��� ǥ���Ѵ�.
         int pit=0;
         public Picture() {
-            // ���콺�κ��� ��ǥ �Է��� �޴´�.
             addMouseListener(new MyMouseListener());
             setSize(new Dimension(1024,900));
         }
         class MyMouseListener extends MouseAdapter {
-            // ���콺 Ŭ�� ������
             public void mouseClicked(MouseEvent e) {
-                // ���콺�� �ش��ϴ� ���ڱ����� ���ؼ�,
                 int location = gridize(e.getPoint());
                 if(location>=0){
-                    // ������ ���� ���ɾ�� �����Ѵ�.
                     try {
                         windows.client.getWriter().println("/attack "+new DecimalFormat("00").format(location));
                         windows.client.getWriter().flush();
@@ -247,7 +213,6 @@ class PlayRoom extends JFrame{
                 }
             }
         }
-        // ���콺�� �Է¹��� ��ǥ�� ����ǥ���� �ٲ۴�.
         public int gridize(Point p){
             int r=96;
             int x0=172;
@@ -273,22 +238,15 @@ class PlayRoom extends JFrame{
             }
             return raw*7+col;
         }
-        // �ִϸ��̼� �׸��� ����2 : �ִϸ��̼� ��ȭ�� ������Ʈ �Ѵ�.
-        // �ִϸ��̼��� ��ȭ�� ������ ����. �ſ� ª�� �������� ����ȴ�. pit�� inst�� ������ �� repaint();
         public void controlChange(ShortMessage event){
             this.inst.add(event.getData1());
             this.pit = event.getData2();
-            // refresh.
             repaint();
         }
-        // �ִϸ��̼� �׸��� ����3 : Graphics�� �׸���.
-        // �׸��� ���� �׸���.
         public void paintComponent(Graphics g) {
-            // ���带 �׸���.
             super.paintComponent(g);
             Image img1 = new ImageIcon("board.jpg").getImage();
             g.drawImage(img1,0,0,this);
-            // ������ �踦 �׸���.
             for (int i = 0; i < grid.length; i++) {
                 if(grid[i]==null){
                     continue;
@@ -302,7 +260,6 @@ class PlayRoom extends JFrame{
                     g.drawImage(img3,172+i%7*96+8,98+i/7*96+31,this);
                 }    
             }
-            // �ִϸ��̼��� �׸���.
             for(Iterator<Integer> it = inst.iterator();it.hasNext();){
                 int num=it.next();
                 g.setColor(Color.yellow);
@@ -310,9 +267,7 @@ class PlayRoom extends JFrame{
             }
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class RoomChatEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �޽��� ���۹�ư�� Ŭ���ȴ�. => roomChatField ���� �۵��Ѵ�.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -324,22 +279,17 @@ class PlayRoom extends JFrame{
                 sendMessageRoom.doClick();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class RoomSendButton implements ActionListener{
-        // ��ư�� ������ roomChatField�� �о �޽��� �����Ѵ�.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(roomChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ������ ����� Ŀ���� �ű��.
             roomChatField.setText("");
             roomChatField.requestFocus();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class ExitRoomButton implements ActionListener{
-        // ��ư�� ������ /leave �޽����� ����
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/leave");
@@ -347,9 +297,7 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class ReadyRoomButton implements ActionListener{
-        // ��ư�� ������ /ready �޽����� ����
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/ready");
@@ -357,9 +305,7 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class StartRoomButton implements ActionListener{
-        // ��ư�� ������ /ready �޽����� ����
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/start");
@@ -367,27 +313,22 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class selectButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class saveO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class loadO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class saveT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class loadT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
@@ -401,12 +342,9 @@ class PlayRoom extends JFrame{
     public ArrayList<JLabel> getPlayerIDs(){
         return playerIDs;
     }
-}
-// ����
+
 class WaitRoom extends JFrame{
-    // ��ü�� �޽��� ����
     GameWindows windows;    
-    // GUI��
     Box publicChat = new Box(BoxLayout.Y_AXIS);
         JTextArea publicChatArea = new JTextArea(10,50);
         Box chatBoxPublic = new Box(BoxLayout.X_AXIS);
@@ -444,9 +382,7 @@ class WaitRoom extends JFrame{
         scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         rooms.setOpaque(true);
         rooms.setBackground(Color.BLUE);
-        // ���ڰ����� 10,2 �� ����10, �¿�10 �������� ��ġ.
         rooms.setLayout(new GridLayout(10,2,10,10));
-        // ���ڰ����� ���ӹ� 20���� ä���ִ´�.
         for(int i=1;i<=20;i++)
             rooms.add(new Room(i,windows));
 
@@ -456,16 +392,13 @@ class WaitRoom extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1200,900);
 
-        // ���ǰ� ���ӹ� ���� ��ġ�� ȭ���� �� ����� ����
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class PublicChatEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �޽��� ���۹�ư�� Ŭ���ȴ�. => publicChatField ���� �۵��Ѵ�.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -477,21 +410,17 @@ class WaitRoom extends JFrame{
                 sendMessagePublic.doClick();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
     class PublicSendButton implements ActionListener{
-        // ��ư�� ������ publicChatField �о �޽��� �����Ѵ�.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(publicChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ������ ����� Ŀ���� �ű��.
             publicChatField.setText("");
             publicChatField.requestFocus();
         }
     }
-}
-// ���ǿ� ���� ���ӹ����â
+
 class Room extends JPanel implements ActionListener{
     ArrayList<JLabel> labelList = new ArrayList<JLabel>();
     GameWindows windows;
@@ -504,7 +433,6 @@ class Room extends JPanel implements ActionListener{
         this.windows = windows;
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
-        // 3,3 ���ڰ����� ����5, �¿�5�� �������� ��ġ
         this.setLayout(new GridLayout(3,3,5,5));
         JLabel roomLabel = new JLabel("Room "+new DecimalFormat("000").format(roomNum));
         roomLabel.setForeground(Color.YELLOW);
@@ -512,19 +440,15 @@ class Room extends JPanel implements ActionListener{
         join.addActionListener(this);
         make.addActionListener(new MakeRoomButton());
 
-        // 9���� ���ڰ����� 3���� ��ư�� ���ȣ,
         this.add(roomLabel);
         this.add(make);
         this.add(join);
-        // ������ 6���� �濡 ������ ����� �̸��� �����ش�.
         for(int i=1;i<=6;i++){
             JLabel newLabel = new JLabel("");
-            // 0,2,4���� �����
             if(i%2==0){
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.YELLOW);
             }
-            // 1,3,5���� ��Ȳ��
             else{
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.ORANGE);
@@ -553,14 +477,12 @@ class Room extends JPanel implements ActionListener{
             }
         }
     }
-    // �����ʸ� �ִ� ù��° ��� : implements ActionListener
     public void actionPerformed(ActionEvent ev){
         try {
             windows.client.getWriter().println("/join "+ new DecimalFormat("000").format(roomNum));
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // �����ʸ� �ִ� �ι�° ��� : inner class
     class MakeRoomButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
             try {
@@ -576,10 +498,7 @@ class Room extends JPanel implements ActionListener{
         labelList.add(label);
     }
 }
-
-// �� �׸��� �ִ� �⺻ �׸�.
 abstract class LoginThema extends JFrame{
-    // ��ü�� �޽��� ����
     GameWindows windows;
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     Dimension fr = super.getSize();
@@ -594,24 +513,20 @@ abstract class LoginThema extends JFrame{
         getContentPane().add(BorderLayout.CENTER, pic);
     }
     Picture pic = new Picture();
-    // JPanel�� Ȯ���ؼ� �׸��� ���� �����´�.
     class Picture extends JPanel{
         public Picture() {
             setLocationRelativeTo(this);
             setSize(new Dimension(400,200));
             repaint();
         }
-        // ��׸��� �׸���.
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Image img1 = new ImageIcon("LoginShip.jpg").getImage();
             g.drawImage(img1,0,0,this);
         }
     }
-}
-// �������� â.
+
 class ServerSelectForm extends LoginThema implements ActionListener{
-    // GUI��
     Box serverSelectBox = new Box(BoxLayout.Y_AXIS);
         Box urlBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("Server URL : ");
@@ -644,23 +559,18 @@ class ServerSelectForm extends LoginThema implements ActionListener{
 
         this.setVisible(true);
     }
-    // 
     public void actionPerformed(ActionEvent ev){
         windows.loginWindow.setVisible(true);
         this.setVisible(false);
         windows.client.setUpNetworking(serverURL.getText());
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
     class ExitButton implements ActionListener{
-        // �н����� �н� â�� �ݰ� �α���â�� ����.
         public void actionPerformed(ActionEvent ev){
             System.exit(0);
         }
     }
-}
-// �α��� â.
+
 class LoginWindow extends LoginThema implements ActionListener{
-    // GUI��
     Box loginBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -704,17 +614,13 @@ class LoginWindow extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, loginBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass�� ������ ���۵ȴ�.
     public void actionPerformed(ActionEvent ev){
         try {   
             windows.client.getWriter().println("/login "+idTextField.getText()+" "+passwdTextField.getText());
-            // windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
-        // Ŀ���� �ű��.
         passwdTextField.requestFocus();
     }
     class LoginButtonEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �α��� ��ư�� Ŭ���ȴ�. => roomChatField ���� �۵��Ѵ�.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -738,10 +644,8 @@ class LoginWindow extends LoginThema implements ActionListener{
             windows.passwordLostForm.setVisible(true);
         }
     }
-}
-// ȸ������ â.
+
 class NewAccountForm extends LoginThema implements ActionListener{
-    // GUI��
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -791,7 +695,6 @@ class NewAccountForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass/name/email�� ������ ���۵ȴ�.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/newaccount ";
         newAccount += idTextField.getText()+" ";
@@ -803,18 +706,14 @@ class NewAccountForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
     class CancelButton implements ActionListener{
-        // ȸ������â�� �ݰ� �α���â�� ����.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.newAccountForm.setVisible(false);
         }
     }
-}
-// �н����� �н� â.
+
 class PasswordLostForm extends LoginThema implements ActionListener{
-    // GUI��
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -850,7 +749,6 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass/name/email�� ������ ���۵ȴ�.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/passwdlost ";
         newAccount += idTextField.getText()+" ";
@@ -860,9 +758,7 @@ class PasswordLostForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
     class CancelButton implements ActionListener{
-        // �н����� �н� â�� �ݰ� �α���â�� ����.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.passwordLostForm.setVisible(false);
@@ -871,7 +767,6 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 }
 class SimpleChatClient{
     private JTextArea incoming;
-    // ��ü�� �޽��� ����
     private Thread readerThread;
     private GameWindows windows;
     private BufferedReader reader;
@@ -883,7 +778,6 @@ class SimpleChatClient{
         this.windows = windows;
         readerThread = new Thread(new IncomingReader());
     }
-    // ������ �����ϰ� ����� ��Ʈ���� �����Ѵ�.
     public void setUpNetworking(String url) {
         try {
             sock = new Socket(url, 5000);
@@ -894,15 +788,12 @@ class SimpleChatClient{
         catch(IOException ex){ex.printStackTrace();}
         readerThread.start();
     }
-    // �����κ��� �޽����� �޴� ������.
     class IncomingReader implements Runnable {
         public void run() {
             String message;
             try {
-                // �޽����� ���� ������ �о���̴µ�,
                 while ((message = reader.readLine()) != null) {
                     System.out.println("client read " + message);
-                    // '/' �� �����ϴ� �޽����� ���ɾ�� �����ϰ� ä��â���� ǥ������ �ʴ´�.
                     if(message.charAt(0)=='/'){
                         if(message.indexOf("init")==1){initGrid(message);}
                         else if(message.indexOf("make")==1){makeRoom(message);}
@@ -914,126 +805,94 @@ class SimpleChatClient{
                         else if(message.indexOf("newaccount")==1){newAccount(message);}
                         else if(message.indexOf("clientstate")==1){clientState(message);}
                     }
-                    // �׷��� ���� �޽����� �׳� ä��â�� ǥ���Ѵ�.
                     else{
                         incoming.append(message + "\n");
                     }
                 }
             } catch (IOException ex){ex.printStackTrace();}
         }
-        // ���ӽ��� �ÿ� �����κ��� 49�� ��ǥ���� �������� �޾ƿ´�.
         public void initGrid(String message){
             windows.playRoom.grid[initCount] = message.substring(6,10);
             initCount++;
-            // 49���� �� �޾����� �ִϸ��̼��� �����Ѵ�.
             if(initCount==49){
                 windows.playRoom.eventMidi();
                 windows.playRoom.pic.repaint();
             }
         }
-        // Ŭ���̾�Ʈ�� /make 000 �� ������, �����κ��� /make 000 ok �� ��ٸ���.
         public void makeRoom(String message){
             String[] makeMessages = message.split(" ");
             if(makeMessages[2].equals("ok")){
-                // ������ ����� ���ӷ��� �����ش�.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ���ӷ��� ä��â���� ���Բ� ����.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /join 000 �� ������, �����κ��� /join 000 ok �� ��ٸ���.
         public void joinRoom(String message){
-            // �޽����� " "�� �ɰ���,
             String[] joinMessages = message.split(" ");
             if(joinMessages[2].equals("ok")){
-                // ������ ����� ���ӷ��� �����ش�.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ���ӷ��� ä��â���� ���Բ� ����.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /leave �� ������, �����κ��� /leave ok �� ��ٸ���.
         public void leaveRoom(String message){
             if(message.substring(7,9).equals("ok")){
-                // ���ӷ��� ����� ������ �����ش�.
                 windows.waitRoom.setVisible(true);
                 windows.playRoom.setVisible(false);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ������ ä��â���� ���Բ� ����.
                 incoming = windows.waitRoom.publicChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /attack 00 �� ������, �����κ��� /attack 00 [??] �� ��ٸ���.
         public void fire(String message){
-            // 1.Ŭ���̾�Ʈ�� ���� ��ǥ�� ����.
-            // 2.������ ������ǥ�� ���� ���߿��� �ľ�.
-            // 3.���߰���� ��� Ŭ���̾�Ʈ���� ����.
             int location = Integer.parseInt(message.substring(8,10));
             windows.playRoom.grid[location] = message.substring(11,15);
             System.out.println(windows.playRoom.grid[location]);
             windows.playRoom.pic.repaint();
         }
-        // Ŭ���̾�Ʈ��, �����κ��� /resetgame ok �� ��ٸ���.
         public void resetGame(String message){
             if(message.substring(11,13).equals("ok")){
-                // ���ڸ� ���� [??]�� �ٲٰ� => ���ݴ��� ������ ���� ��������.
                 windows.playRoom.resetGrid();
-                // ������ �ִϸ��̼� �����ӵ��� ��� �����.
                 windows.playRoom.resetMidi();
-                // /init �޽����� �ޱ� ���ؼ� 0���� �ʱ�ȭ�Ѵ�.
                 initCount=0;
             }
         }
-        // Ŭ���̾�Ʈ�� /login id passwd�� ������, �����κ��� /login ok id name �� ��ٸ���.
         public void login(String message){
             String[] okMessages = message.split(" ");
-            // ������ ���� �̷������ �α���â�� ����� ������ �����ش�.
             if(okMessages[1].equals("ok")){
                 windows.playRoom.userID.setText(okMessages[2]);
                 windows.playRoom.userName.setText(okMessages[3]);
                 windows.waitRoom.setVisible(true);
                 windows.loginWindow.setVisible(false);
             }
-            // �����κ��� id�� password �� �߿� �ϳ��� �Է����� �ʾҴٰ� �޽����� ���� �� �ִ�.
             else if(okMessages[1].equals("notentered")){
                 JOptionPane.showConfirmDialog(null,"Please enter ID and Password");
             }
-            // �����κ��� id�� password �� �߸� �ԷµǾ��ٰ� �޽����� ���� �� �ִ�.
             else if(okMessages[1].equals("mismatch")){
                 JOptionPane.showConfirmDialog(null,"Please check your ID and Password");
             }
         }
         public void newAccount(String message){
             String[] okMessages = message.split(" ");
-            // ���ο� ������ ���������� ������ٸ�, �����κ��� �������� �޽����� ���� �� �ִ�.
             if(okMessages[1].equals("ok")){
                 JOptionPane.showConfirmDialog(null,"Success!");
             }
-            // �̹� �����ϴ� ���̵���, �����κ��� ���� �޽����� ���� �� �ִ�.
             else if(okMessages[1].equals("idcollision")){
                 JOptionPane.showConfirmDialog(null,"The ID you entered is already exist");
             }
-            // ���̵� ������ ���� �ʴ´ٰ�, �����κ��� ���� �޽����� ���� �� �ִ�.
             else if(okMessages[1].equals("idformaterror")){
                 JOptionPane.showConfirmDialog(null,"Special Character can't be used for ID");
             }
-            // �̸��� ������ ���� �ʴ´ٰ�, �����κ��� ���� �޽����� ���� �� �ִ�.
             else if(okMessages[1].equals("emailformaterror")){
                 JOptionPane.showConfirmDialog(null,"Email format is not good");
             }
         }
-        // Ŭ���̾�Ʈ�� �濡 ���ų� ���� ��, ������ ������Ʈ �Ѵ�.
         public void clientState(String message){
             String stateMessages[] = message.split(" ");
             String clientID = stateMessages[1];
             int from = Integer.parseInt(stateMessages[3]);
             int to = Integer.parseInt(stateMessages[5]);
-            // Ŭ���̾�Ʈ�� ���ӹ濡�� �ٸ� ������ �̵��� ��,
             if(from!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(from-1)).removePlayer(clientID);
             }
-            // Ŭ���̾�Ʈ�� ���ǿ��� �ٸ� ������ �̵��� ��,
             else{
                 for(int i=0;i<windows.waitRoom.clientIDs.size();i++){
                     if(windows.waitRoom.clientIDs.get(i).equals(clientID)){
@@ -1042,11 +901,9 @@ class SimpleChatClient{
                     }
                 }
             }
-            // Ŭ���̾�Ʈ�� ���ӹ����� �̵��� ��,
             if(to!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(to-1)).addPlayer(clientID);
             }
-            // Ŭ���̾�Ʈ�� ���Ƿ� �̵��� ��,
             else{
                 windows.waitRoom.clientIDs.add(clientID);
             }
