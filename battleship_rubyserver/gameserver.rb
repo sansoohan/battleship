@@ -14,6 +14,7 @@ class GameServer
         while 1
             Thread.start(@serverSocket.accept) do |clientSocket|
                 newClient = GameClient.new(clientSocket, self)
+                printf("New Client %s:%s\n",newClient.clientSocket.peeraddr[2], newClient.clientSocket.peeraddr[1])
                 @clients.push(newClient)
                 begin
                     newClient.run
@@ -85,7 +86,7 @@ class GameClient
 
     def run
         while 1
-            @messageFromClient = getMessage
+            @messageFromClient = @clientSocket.gets()
             begin
                 messageController(@messageFromClient)    
             rescue => exception
@@ -131,7 +132,6 @@ class GameClient
         else
             for client in @server.clients do
                 if @roomNumber == client.roomNumber
-                    sleep(0.01)
                     begin
                         client.messageToClient(message)
                     rescue => exception
@@ -308,10 +308,6 @@ class GameClient
             puts exception 
         end
     end
-
-    def getMessage
-        return @clientSocket.gets()
-    end
     
     def messageToClient(message)
         @semaphore.synchronize do
@@ -340,11 +336,11 @@ class GameClient
                 puts exception 
             end
         else
-            @roomObserver.clientsInRoom.removeClient(self)
+            @roomObserver.removeClient(self)
             if @isRoomMaster == true
                 @isRoomMaster = false
                 if @roomObserver.clientsInRoom.length == 0
-                    @server.gameRoomLiast.delete(@roomObserver)
+                    @server.gameRoomList.delete(@roomObserver)
                 else
                     newRoomMaster = @roomObserver.clientsInRoom[0]
                     begin
