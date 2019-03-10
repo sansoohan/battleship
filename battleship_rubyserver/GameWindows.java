@@ -13,19 +13,19 @@ public class GameWindows{
     public static void main(String[] args) {
         GameWindows windows = new GameWindows();
     }
-    // ��������â
+    // 서버선택창
     ServerSelectForm serverSelect;
-    // �α���â
+    // 로그인창
     LoginWindow loginWindow;
-    // ȸ�����Ծ��
+    // 회원가입양식
     NewAccountForm newAccountForm;
-    // �н�����нǾ��
+    // 패스워드분실양식
     PasswordLostForm passwordLostForm;
-    // ����
+    // 대기실
     WaitRoom waitRoom;
-    // ���ӹ�
+    // 게임방
     PlayRoom playRoom;
-    // ������ �޽��� ��ȯ.
+    // 서버와 메시지 교환.
     SimpleChatClient client;
     public GameWindows(){
         serverSelect = new ServerSelectForm(this);
@@ -37,17 +37,17 @@ public class GameWindows{
         client = new SimpleChatClient(waitRoom.publicChatArea,this);
     }
 }
-// ���ӹ�
+// 게임방
 class PlayRoom extends JFrame{
-    // ��ü�� �޽��� ����
+    // 객체간 메시지 전송
     GameWindows windows;
     private int roomNum;
 
     ArrayList<String> clientIDs = new ArrayList<String>();
-    // GUI ��
+    // GUI 맵
     Picture pic = new Picture();
         String imageSource = "ship.png";
-        // ���⿡ ������ ���� ���� ���� ����ȴ�.
+        // 여기에 서버로 부터 받은 맵이 저장된다.
         String[] grid = new String[49];
     
     Box rightBox = new Box(BoxLayout.Y_AXIS);
@@ -81,7 +81,7 @@ class PlayRoom extends JFrame{
         
         JFileChooser chooser = new JFileChooser();
 
-    // GUI��ü����/�̺�Ʈ�����ʵ��
+    // GUI객체연결/이벤트리스너등록
     public PlayRoom(GameWindows windows){
         this.windows = windows;
         saveObject.addActionListener(new saveO());
@@ -141,20 +141,20 @@ class PlayRoom extends JFrame{
         setBounds(0,0,1200,900);
         setVisible(false);
 
-        // ���ǰ� ���ӹ� ���� ��ġ�� ȭ���� �� ����� ����
+        // 대기실과 게임방 시작 위치를 화면의 한 가운데로 조정
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // ������ �ʱ�ȭ
+    // 게임판 초기화
     public void resetGrid(){
         for(int i=0;i<49;i++){
             grid[i] = "[??]";
         }   
     }
-    // �ִϸ��̼��� ���� �̵� ��. �̵�� ���⺸�ٴ�, �ð� �帧�� ���� ���ϸ��̼����� ���� ����.
+    // 애니메이션을 위한 미디 맵. 미디로 쓰기보다는, 시간 흐름에 따른 에니메이션으로 많이 쓴다.
     Sequencer sequencer;
         Sequence seq;
             Track track;
@@ -162,11 +162,11 @@ class PlayRoom extends JFrame{
                 int mySpotNum;
                 MidiEvent[][] midiEvents;
 
-    // �ִϸ��̼� �׸��� ����1 : �ִϸ��̼��� ����ϰ� �����Ѵ�.
-    // �����ʿ��� ���۹��� �ڽ��� �� ��ǥ�� ������ �ִϸ��̼��� �����ϰ� �����Ѵ�.
+    // 애니메이션 그리기 과정1 : 애니메이션을 등록하고 실행한다.
+    // 서버쪽에서 전송받은 자신의 배 좌표를 보여줄 애니메이션을 셋팅하고 실행한다.
     public void eventMidi(){
-        // �ִϸ��̼��� ����� �� �ִϸ��̼��� ������ ��ǥ�� int[]������ �ٲ㼭 �������� �Ѵ�.
-        // int[]�� ũ�� Ȯ��.
+        // 애니메이션을 등록할 때 애니메이션을 보여줄 좌표를 int[]형으로 바꿔서 등록해줘야 한다.
+        // int[]의 크기 확보.
         int count=0;
         for(int i=0;i<grid.length;i++){
             if(grid[i].equals("[ME]")){
@@ -174,7 +174,7 @@ class PlayRoom extends JFrame{
             }
         }
         mySpotNum = count;
-        // int[]�� �ڽ��� ��ǥ �ε��� ����.
+        // int[]에 자신의 좌표 인덱스 보관.
         int[] myspots = new int[count];
         midiEvents = new MidiEvent[FRAME][mySpotNum];
         for(int i=0,k=0;i<grid.length;i++){
@@ -190,11 +190,11 @@ class PlayRoom extends JFrame{
             seq = new Sequence(Sequence.PPQ,4);
             track = seq.createTrack();
             sequencer.setSequence(seq);
-            // i : �ִϸ��̼� �������� 10��
+            // i : 애니메이션 프레임은 10개
             for(int i=0;i<FRAME;i++){
-                // j : �ִϸ��̼��� �׷��� ��ǥ��
+                // j : 애니메이션이 그려질 좌표들
                 for(int j=0;j<mySpotNum;j++){
-                    // �������� �׷����� �ð��� ��ǥ���� ����Ѵ�.
+                    // 프레임이 그려지는 시간과 좌표들을 등록한다.
                     try{
                         MidiEvent midiEvent = new MidiEvent(new ShortMessage(176,1,myspots[j],i),i);
                         midiEvents[i][j] = midiEvent;
@@ -202,15 +202,15 @@ class PlayRoom extends JFrame{
                     }catch(Exception e){}
                 }
             }
-            // �ִϸ��̼� �ݺ� ������� ����
+            // 애니메이션 반복 재생으로 설정
             sequencer.setLoopCount(sequencer.LOOP_CONTINUOUSLY);
-            // �ִϸ��̼� ����
+            // 애니메이션 시작
             sequencer.start();
-            // �ִϸ��̼� ������ ����
+            // 애니메이션 빠르기 설정
             sequencer.setTempoInBPM(60*10);
         }catch(Exception e){}
     }
-    // ������ ����� �ϱ� ���ؼ� ����� ���� �̵� �̺�Ʈ���� ���� �����.
+    // 게임을 재시작 하기 위해서 등록해 놓은 미디 이벤트들을 전부 지운다.
     public void resetMidi(){
         sequencer.stop();
         for(int i=0;i<FRAME;i++){
@@ -224,22 +224,22 @@ class PlayRoom extends JFrame{
         pic.repaint();
     }
     class Picture extends JPanel implements ControllerEventListener{
-        // inst�� HashSet���� add�Ͽ� �ߺ���ǥ ������ �����Ѵ�.
+        // inst는 HashSet으로 add하여 중복좌표 저장을 방지한다.
         HashSet<Integer> inst = new HashSet<Integer>();
-        // pit�� �����Ӻ� �ִϸ��̼��� ǥ���Ѵ�.
+        // pit는 프레임별 애니메이션을 표시한다.
         int pit=0;
         public Picture() {
-            // ���콺�κ��� ��ǥ �Է��� �޴´�.
+            // 마우스로부터 좌표 입력을 받는다.
             addMouseListener(new MyMouseListener());
             setSize(new Dimension(1024,900));
         }
         class MyMouseListener extends MouseAdapter {
-            // ���콺 Ŭ�� ������
+            // 마우스 클릭 리스너
             public void mouseClicked(MouseEvent e) {
-                // ���콺�� �ش��ϴ� ���ڱ����� ���ؼ�,
+                // 마우스에 해당하는 격자구간을 구해서,
                 int location = gridize(e.getPoint());
                 if(location>=0){
-                    // ������ ���� ���ɾ�� �����Ѵ�.
+                    // 서버에 공격 명령어로 전송한다.
                     try {
                         windows.client.getWriter().println("/attack "+new DecimalFormat("00").format(location));
                         windows.client.getWriter().flush();
@@ -247,7 +247,7 @@ class PlayRoom extends JFrame{
                 }
             }
         }
-        // ���콺�� �Է¹��� ��ǥ�� ����ǥ���� �ٲ۴�.
+        // 마우스로 입력받은 좌표를 맵좌표으로 바꾼다.
         public int gridize(Point p){
             int r=96;
             int x0=172;
@@ -273,22 +273,22 @@ class PlayRoom extends JFrame{
             }
             return raw*7+col;
         }
-        // �ִϸ��̼� �׸��� ����2 : �ִϸ��̼� ��ȭ�� ������Ʈ �Ѵ�.
-        // �ִϸ��̼��� ��ȭ�� ������ ����. �ſ� ª�� �������� ����ȴ�. pit�� inst�� ������ �� repaint();
+        // 애니메이션 그리기 과정2 : 애니메이션 변화를 업데이트 한다.
+        // 애니메이션이 변화될 때마다 실행. 매우 짧은 간격으로 실행된다. pit과 inst에 저장한 후 repaint();
         public void controlChange(ShortMessage event){
             this.inst.add(event.getData1());
             this.pit = event.getData2();
             // refresh.
             repaint();
         }
-        // �ִϸ��̼� �׸��� ����3 : Graphics�� �׸���.
-        // �׸��� ���� �׸���.
+        // 애니메이션 그리기 과정3 : Graphics가 그린다.
+        // 그리기 툴로 그린다.
         public void paintComponent(Graphics g) {
-            // ���带 �׸���.
+            // 보드를 그린다.
             super.paintComponent(g);
             Image img1 = new ImageIcon("board.jpg").getImage();
             g.drawImage(img1,0,0,this);
-            // ������ �踦 �׸���.
+            // 명중한 배를 그린다.
             for (int i = 0; i < grid.length; i++) {
                 if(grid[i]==null){
                     continue;
@@ -302,7 +302,7 @@ class PlayRoom extends JFrame{
                     g.drawImage(img3,172+i%7*96+8,98+i/7*96+31,this);
                 }    
             }
-            // �ִϸ��̼��� �׸���.
+            // 애니메이션을 그린다.
             for(Iterator<Integer> it = inst.iterator();it.hasNext();){
                 int num=it.next();
                 g.setColor(Color.yellow);
@@ -310,9 +310,9 @@ class PlayRoom extends JFrame{
             }
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class RoomChatEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �޽��� ���۹�ư�� Ŭ���ȴ�. => roomChatField ���� �۵��Ѵ�.
+        // 엔터키를 입력하면 메시지 전송버튼이 클릭된다. => roomChatField 에서 작동한다.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -324,22 +324,22 @@ class PlayRoom extends JFrame{
                 sendMessageRoom.doClick();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class RoomSendButton implements ActionListener{
-        // ��ư�� ������ roomChatField�� �о �޽��� �����Ѵ�.
+        // 버튼을 누르면 roomChatField를 읽어서 메시지 전송한다.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(roomChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ������ ����� Ŀ���� �ű��.
+            // 내용을 지우고 커서를 옮긴다.
             roomChatField.setText("");
             roomChatField.requestFocus();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class ExitRoomButton implements ActionListener{
-        // ��ư�� ������ /leave �޽����� ����
+        // 버튼은 누르면 /leave 메시지를 전송
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/leave");
@@ -347,9 +347,9 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class ReadyRoomButton implements ActionListener{
-        // ��ư�� ������ /ready �޽����� ����
+        // 버튼은 누르면 /ready 메시지를 전송
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/ready");
@@ -357,9 +357,9 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class StartRoomButton implements ActionListener{
-        // ��ư�� ������ /ready �޽����� ����
+        // 버튼은 누르면 /ready 메시지를 전송
         public void actionPerformed(ActionEvent ev){            
             try {
                 windows.client.getWriter().println("/start");
@@ -367,27 +367,27 @@ class PlayRoom extends JFrame{
             }catch (Exception ex) {ex.printStackTrace();}
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class selectButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class saveO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class loadO implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class saveT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class loadT implements ActionListener{
         public void actionPerformed(ActionEvent ev){
         }
@@ -402,11 +402,11 @@ class PlayRoom extends JFrame{
         return playerIDs;
     }
 }
-// ����
+// 대기실
 class WaitRoom extends JFrame{
-    // ��ü�� �޽��� ����
+    // 객체간 메시지 전송
     GameWindows windows;    
-    // GUI��
+    // GUI맵
     Box publicChat = new Box(BoxLayout.Y_AXIS);
         JTextArea publicChatArea = new JTextArea(10,50);
         Box chatBoxPublic = new Box(BoxLayout.X_AXIS);
@@ -444,9 +444,9 @@ class WaitRoom extends JFrame{
         scroller2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         rooms.setOpaque(true);
         rooms.setBackground(Color.BLUE);
-        // ���ڰ����� 10,2 �� ����10, �¿�10 �������� ��ġ.
+        // 격자공간을 10,2 로 상하10, 좌우10 간격으로 배치.
         rooms.setLayout(new GridLayout(10,2,10,10));
-        // ���ڰ����� ���ӹ� 20���� ä���ִ´�.
+        // 격자공간에 게임방 20개를 채워넣는다.
         for(int i=1;i<=20;i++)
             rooms.add(new Room(i,windows));
 
@@ -456,16 +456,16 @@ class WaitRoom extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0,0,1200,900);
 
-        // ���ǰ� ���ӹ� ���� ��ġ�� ȭ���� �� ����� ����
+        // 대기실과 게임방 시작 위치를 화면의 한 가운데로 조정
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension fr = getSize();
         int xpos = (int)(screen.getWidth()/2 - fr.getWidth()/2);
         int ypos = (int)(screen.getHeight()/2 - fr.getHeight()/2);
         setLocation(xpos,ypos);
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class PublicChatEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �޽��� ���۹�ư�� Ŭ���ȴ�. => publicChatField ���� �۵��Ѵ�.
+        // 엔터키를 입력하면 메시지 전송버튼이 클릭된다. => publicChatField 에서 작동한다.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -477,21 +477,21 @@ class WaitRoom extends JFrame{
                 sendMessagePublic.doClick();
         }
     }
-    // �̺�Ʈ ������ ����� ���� Ŭ����
+    // 이벤트 리스너 등록을 위한 클래스
     class PublicSendButton implements ActionListener{
-        // ��ư�� ������ publicChatField �о �޽��� �����Ѵ�.
+        // 버튼을 누르면 publicChatField 읽어서 메시지 전송한다.
         public void actionPerformed(ActionEvent ev){
             try {
                 windows.client.getWriter().println(publicChatField.getText());
                 windows.client.getWriter().flush();
             }catch (Exception ex) {ex.printStackTrace();}
-            // ������ ����� Ŀ���� �ű��.
+            // 내용을 지우고 커서를 옮긴다.
             publicChatField.setText("");
             publicChatField.requestFocus();
         }
     }
 }
-// ���ǿ� ���� ���ӹ����â
+// 대기실에 들어가는 게임방상태창
 class Room extends JPanel implements ActionListener{
     ArrayList<JLabel> labelList = new ArrayList<JLabel>();
     GameWindows windows;
@@ -504,27 +504,27 @@ class Room extends JPanel implements ActionListener{
         this.windows = windows;
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
-        // 3,3 ���ڰ����� ����5, �¿�5�� �������� ��ġ
+        // 3,3 격자공간을 상하5, 좌우5의 간격으로 배치
         this.setLayout(new GridLayout(3,3,5,5));
         JLabel roomLabel = new JLabel("Room "+new DecimalFormat("000").format(roomNum));
         roomLabel.setForeground(Color.YELLOW);
-        //�����ʴ� �ΰ��� ������� ��� ����.
+        //리스너는 두가지 방법으로 등록 가능.
         join.addActionListener(this);
         make.addActionListener(new MakeRoomButton());
 
-        // 9���� ���ڰ����� 3���� ��ư�� ���ȣ,
+        // 9개의 격자공간중 3개는 버튼과 방번호,
         this.add(roomLabel);
         this.add(make);
         this.add(join);
-        // ������ 6���� �濡 ������ ����� �̸��� �����ش�.
+        // 나머지 6개는 방에 접속한 사람의 이름을 보여준다.
         for(int i=1;i<=6;i++){
             JLabel newLabel = new JLabel("");
-            // 0,2,4���� �����
+            // 0,2,4번은 노란색
             if(i%2==0){
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.YELLOW);
             }
-            // 1,3,5���� ��Ȳ��
+            // 1,3,5번은 주황색
             else{
                 newLabel.setOpaque(true);
                 newLabel.setBackground(Color.ORANGE);
@@ -553,14 +553,14 @@ class Room extends JPanel implements ActionListener{
             }
         }
     }
-    // �����ʸ� �ִ� ù��° ��� : implements ActionListener
+    // 리스너를 넣는 첫번째 방법 : implements ActionListener
     public void actionPerformed(ActionEvent ev){
         try {
             windows.client.getWriter().println("/join "+ new DecimalFormat("000").format(roomNum));
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // �����ʸ� �ִ� �ι�° ��� : inner class
+    // 리스너를 넣는 두번째 방법 : inner class
     class MakeRoomButton implements ActionListener{
         public void actionPerformed(ActionEvent ev){
             try {
@@ -577,9 +577,9 @@ class Room extends JPanel implements ActionListener{
     }
 }
 
-// �� �׸��� �ִ� �⺻ �׸�.
+// 배 그림이 있는 기본 테마.
 abstract class LoginThema extends JFrame{
-    // ��ü�� �޽��� ����
+    // 객체간 메시지 전송
     GameWindows windows;
     Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
     Dimension fr = super.getSize();
@@ -594,14 +594,14 @@ abstract class LoginThema extends JFrame{
         getContentPane().add(BorderLayout.CENTER, pic);
     }
     Picture pic = new Picture();
-    // JPanel�� Ȯ���ؼ� �׸��� ���� �����´�.
+    // JPanel을 확장해서 그리기 툴을 가져온다.
     class Picture extends JPanel{
         public Picture() {
             setLocationRelativeTo(this);
             setSize(new Dimension(400,200));
             repaint();
         }
-        // ��׸��� �׸���.
+        // 배그림을 그린다.
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             Image img1 = new ImageIcon("LoginShip.jpg").getImage();
@@ -609,9 +609,9 @@ abstract class LoginThema extends JFrame{
         }
     }
 }
-// �������� â.
+// 서버선택 창.
 class ServerSelectForm extends LoginThema implements ActionListener{
-    // GUI��
+    // GUI맵
     Box serverSelectBox = new Box(BoxLayout.Y_AXIS);
         Box urlBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("Server URL : ");
@@ -650,17 +650,17 @@ class ServerSelectForm extends LoginThema implements ActionListener{
         this.setVisible(false);
         windows.client.setUpNetworking(serverURL.getText());
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
+    // cancel버튼에 등록할 이벤트 리스너
     class ExitButton implements ActionListener{
-        // �н����� �н� â�� �ݰ� �α���â�� ����.
+        // 패스워드 분실 창을 닫고 로그인창을 연다.
         public void actionPerformed(ActionEvent ev){
             System.exit(0);
         }
     }
 }
-// �α��� â.
+// 로그인 창.
 class LoginWindow extends LoginThema implements ActionListener{
-    // GUI��
+    // GUI맵
     Box loginBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -704,17 +704,17 @@ class LoginWindow extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, loginBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass�� ������ ���۵ȴ�.
+    // 입력확인 버튼을 누르면 서버로 id/pass가 서버로 전송된다.
     public void actionPerformed(ActionEvent ev){
         try {   
             windows.client.getWriter().println("/login "+idTextField.getText()+" "+passwdTextField.getText());
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
-        // Ŀ���� �ű��.
+        // 커서를 옮긴다.
         passwdTextField.requestFocus();
     }
     class LoginButtonEnterKey extends KeyAdapter {
-        // ����Ű�� �Է��ϸ� �α��� ��ư�� Ŭ���ȴ�. => roomChatField ���� �۵��Ѵ�.
+        // 엔터키를 입력하면 로그인 버튼이 클릭된다. => roomChatField 에서 작동한다.
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             System.out.println(e.getKeyText(keycode) + " keyCode : "+keycode);
@@ -739,9 +739,9 @@ class LoginWindow extends LoginThema implements ActionListener{
         }
     }
 }
-// ȸ������ â.
+// 회원가입 창.
 class NewAccountForm extends LoginThema implements ActionListener{
-    // GUI��
+    // GUI맵
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -791,7 +791,7 @@ class NewAccountForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass/name/email�� ������ ���۵ȴ�.
+    // 입력확인 버튼을 누르면 서버로 id/pass/name/email이 서버로 전송된다.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/newaccount ";
         newAccount += idTextField.getText()+" ";
@@ -803,18 +803,18 @@ class NewAccountForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
+    // cancel버튼에 등록할 이벤트 리스너
     class CancelButton implements ActionListener{
-        // ȸ������â�� �ݰ� �α���â�� ����.
+        // 회원가입창을 닫고 로그인창을 연다.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.newAccountForm.setVisible(false);
         }
     }
 }
-// �н����� �н� â.
+// 패스워드 분실 창.
 class PasswordLostForm extends LoginThema implements ActionListener{
-    // GUI��
+    // GUI맵
     Box newAccountBox = new Box(BoxLayout.Y_AXIS);
         Box idBox = new Box(BoxLayout.X_AXIS);
             JLabel idLabel = new JLabel("ID : ");
@@ -850,7 +850,7 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 
         getContentPane().add(BorderLayout.SOUTH, newAccountBox);
     }
-    // �Է�Ȯ�� ��ư�� ������ ������ id/pass/name/email�� ������ ���۵ȴ�.
+    // 입력확인 버튼을 누르면 서버로 id/pass/name/email이 서버로 전송된다.
     public void actionPerformed(ActionEvent ev){
         String newAccount = "/passwdlost ";
         newAccount += idTextField.getText()+" ";
@@ -860,9 +860,9 @@ class PasswordLostForm extends LoginThema implements ActionListener{
             windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
     }
-    // cancel��ư�� ����� �̺�Ʈ ������
+    // cancel버튼에 등록할 이벤트 리스너
     class CancelButton implements ActionListener{
-        // �н����� �н� â�� �ݰ� �α���â�� ����.
+        // 패스워드 분실 창을 닫고 로그인창을 연다.
         public void actionPerformed(ActionEvent ev){
             windows.loginWindow.setVisible(true);
             windows.passwordLostForm.setVisible(false);
@@ -871,7 +871,7 @@ class PasswordLostForm extends LoginThema implements ActionListener{
 }
 class SimpleChatClient{
     private JTextArea incoming;
-    // ��ü�� �޽��� ����
+    // 객체간 메시지 전송
     private Thread readerThread;
     private GameWindows windows;
     private BufferedReader reader;
@@ -883,7 +883,7 @@ class SimpleChatClient{
         this.windows = windows;
         readerThread = new Thread(new IncomingReader());
     }
-    // ������ �����ϰ� ����� ��Ʈ���� �����Ѵ�.
+    // 서버와 연결하고 입출력 스트림을 저장한다.
     public void setUpNetworking(String url) {
         try {
             sock = new Socket(url, 5000);
@@ -894,15 +894,15 @@ class SimpleChatClient{
         catch(IOException ex){ex.printStackTrace();}
         readerThread.start();
     }
-    // �����κ��� �޽����� �޴� ������.
+    // 서버로부터 메시지를 받는 스레드.
     class IncomingReader implements Runnable {
         public void run() {
             String message;
             try {
-                // �޽����� ���� ������ �о���̴µ�,
+                // 메시지가 없을 때까지 읽어들이는데,
                 while ((message = reader.readLine()) != null) {
                     System.out.println("client read " + message);
-                    // '/' �� �����ϴ� �޽����� ���ɾ�� �����ϰ� ä��â���� ǥ������ �ʴ´�.
+                    // '/' 로 시작하는 메시지는 명령어로 간주하고 채팅창에는 표시하지 않는다.
                     if(message.charAt(0)=='/'){
                         if(message.indexOf("init")==1){initGrid(message);}
                         else if(message.indexOf("make")==1){makeRoom(message);}
@@ -914,126 +914,126 @@ class SimpleChatClient{
                         else if(message.indexOf("newaccount")==1){newAccount(message);}
                         else if(message.indexOf("clientstate")==1){clientState(message);}
                     }
-                    // �׷��� ���� �޽����� �׳� ä��â�� ǥ���Ѵ�.
+                    // 그렇지 않은 메시지는 그냥 채팅창에 표시한다.
                     else{
                         incoming.append(message + "\n");
                     }
                 }
             } catch (IOException ex){ex.printStackTrace();}
         }
-        // ���ӽ��� �ÿ� �����κ��� 49�� ��ǥ���� �������� �޾ƿ´�.
+        // 게임시작 시에 서버로부터 49개 좌표값을 연속으로 받아온다.
         public void initGrid(String message){
             windows.playRoom.grid[initCount] = message.substring(6,10);
             initCount++;
-            // 49���� �� �޾����� �ִϸ��̼��� �����Ѵ�.
+            // 49개를 다 받았으면 애니메이션을 시작한다.
             if(initCount==49){
                 windows.playRoom.eventMidi();
                 windows.playRoom.pic.repaint();
             }
         }
-        // Ŭ���̾�Ʈ�� /make 000 �� ������, �����κ��� /make 000 ok �� ��ٸ���.
+        // 클라이언트는 /make 000 을 보내고, 서버로부터 /make 000 ok 를 기다린다.
         public void makeRoom(String message){
             String[] makeMessages = message.split(" ");
             if(makeMessages[2].equals("ok")){
-                // ������ ����� ���ӷ��� �����ش�.
+                // 대기실을 지우고 게임룸을 보여준다.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ���ӷ��� ä��â���� ���Բ� ����.
+                // 클라이언트가 서버로부터 받은 메시지를 게임룸의 채팅창으로 가게끔 변경.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /join 000 �� ������, �����κ��� /join 000 ok �� ��ٸ���.
+        // 클라이언트는 /join 000 을 보내고, 서버로부터 /join 000 ok 를 기다린다.
         public void joinRoom(String message){
-            // �޽����� " "�� �ɰ���,
+            // 메시지를 " "로 쪼개서,
             String[] joinMessages = message.split(" ");
             if(joinMessages[2].equals("ok")){
-                // ������ ����� ���ӷ��� �����ش�.
+                // 대기실을 지우고 게임룸을 보여준다.
                 windows.waitRoom.setVisible(false);
                 windows.playRoom.setVisible(true);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ���ӷ��� ä��â���� ���Բ� ����.
+                // 클라이언트가 서버로부터 받은 메시지를 게임룸의 채팅창으로 가게끔 변경.
                 incoming = windows.playRoom.roomChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /leave �� ������, �����κ��� /leave ok �� ��ٸ���.
+        // 클라이언트는 /leave 를 보내고, 서버로부터 /leave ok 를 기다린다.
         public void leaveRoom(String message){
             if(message.substring(7,9).equals("ok")){
-                // ���ӷ��� ����� ������ �����ش�.
+                // 게임룸을 지우고 대기실을 보여준다.
                 windows.waitRoom.setVisible(true);
                 windows.playRoom.setVisible(false);
-                // Ŭ���̾�Ʈ�� �����κ��� ���� �޽����� ������ ä��â���� ���Բ� ����.
+                // 클라이언트가 서버로부터 받은 메시지를 대기실의 채팅창으로 가게끔 변경.
                 incoming = windows.waitRoom.publicChatArea;
             }
         }
-        // Ŭ���̾�Ʈ�� /attack 00 �� ������, �����κ��� /attack 00 [??] �� ��ٸ���.
+        // 클라이언트는 /attack 00 를 보내고, 서버로부터 /attack 00 [??] 를 기다린다.
         public void fire(String message){
-            // 1.Ŭ���̾�Ʈ�� ���� ��ǥ�� ����.
-            // 2.������ ������ǥ�� ���� ���߿��� �ľ�.
-            // 3.���߰���� ��� Ŭ���̾�Ʈ���� ����.
+            // 1.클라이언트가 공격 좌표를 전송.
+            // 2.서버가 공격좌표에 따른 적중여부 파악.
+            // 3.적중결과를 모든 클라이언트에게 전송.
             int location = Integer.parseInt(message.substring(8,10));
             windows.playRoom.grid[location] = message.substring(11,15);
             System.out.println(windows.playRoom.grid[location]);
             windows.playRoom.pic.repaint();
         }
-        // Ŭ���̾�Ʈ��, �����κ��� /resetgame ok �� ��ٸ���.
+        // 클라이언트는, 서버로부터 /resetgame ok 를 기다린다.
         public void resetGame(String message){
             if(message.substring(11,13).equals("ok")){
-                // ���ڸ� ���� [??]�� �ٲٰ� => ���ݴ��� ������ ���� ��������.
+                // 격자를 전부 [??]로 바꾸고 => 공격당한 지점이 전부 지워진다.
                 windows.playRoom.resetGrid();
-                // ������ �ִϸ��̼� �����ӵ��� ��� �����.
+                // 저장한 애니메이션 프레임들을 모두 지운다.
                 windows.playRoom.resetMidi();
-                // /init �޽����� �ޱ� ���ؼ� 0���� �ʱ�ȭ�Ѵ�.
+                // /init 메시지를 받기 위해서 0으로 초기화한다.
                 initCount=0;
             }
         }
-        // Ŭ���̾�Ʈ�� /login id passwd�� ������, �����κ��� /login ok id name �� ��ٸ���.
+        // 클라이언트는 /login id passwd를 보내고, 서버로부터 /login ok id name 을 기다린다.
         public void login(String message){
             String[] okMessages = message.split(" ");
-            // ������ ���� �̷������ �α���â�� ����� ������ �����ش�.
+            // 접속이 재대로 이루어지면 로그인창을 지우고 대기실을 보여준다.
             if(okMessages[1].equals("ok")){
                 windows.playRoom.userID.setText(okMessages[2]);
                 windows.playRoom.userName.setText(okMessages[3]);
                 windows.waitRoom.setVisible(true);
                 windows.loginWindow.setVisible(false);
             }
-            // �����κ��� id�� password �� �߿� �ϳ��� �Է����� �ʾҴٰ� �޽����� ���� �� �ִ�.
+            // 서버로부터 id나 password 둘 중에 하나를 입력하지 않았다고 메시지를 받을 수 있다.
             else if(okMessages[1].equals("notentered")){
                 JOptionPane.showConfirmDialog(null,"Please enter ID and Password");
             }
-            // �����κ��� id�� password �� �߸� �ԷµǾ��ٰ� �޽����� ���� �� �ִ�.
+            // 서버로부터 id나 password 가 잘못 입력되었다고 메시지를 받을 수 있다.
             else if(okMessages[1].equals("mismatch")){
                 JOptionPane.showConfirmDialog(null,"Please check your ID and Password");
             }
         }
         public void newAccount(String message){
             String[] okMessages = message.split(" ");
-            // ���ο� ������ ���������� ������ٸ�, �����κ��� �������� �޽����� ���� �� �ִ�.
+            // 새로운 계정을 정상적으로 만들었다면, 서버로부터 계정생성 메시지를 받을 수 있다.
             if(okMessages[1].equals("ok")){
                 JOptionPane.showConfirmDialog(null,"Success!");
             }
-            // �̹� �����ϴ� ���̵���, �����κ��� ���� �޽����� ���� �� �ִ�.
+            // 이미 존재하는 아이디라고, 서버로부터 에러 메시지를 받을 수 있다.
             else if(okMessages[1].equals("idcollision")){
                 JOptionPane.showConfirmDialog(null,"The ID you entered is already exist");
             }
-            // ���̵� ������ ���� �ʴ´ٰ�, �����κ��� ���� �޽����� ���� �� �ִ�.
+            // 아이디 형식이 맞지 않는다고, 서버로부터 에러 메시지를 받을 수 있다.
             else if(okMessages[1].equals("idformaterror")){
                 JOptionPane.showConfirmDialog(null,"Special Character can't be used for ID");
             }
-            // �̸��� ������ ���� �ʴ´ٰ�, �����κ��� ���� �޽����� ���� �� �ִ�.
+            // 이메일 형식이 맞지 않는다고, 서버로부터 에러 메시지를 받을 수 있다.
             else if(okMessages[1].equals("emailformaterror")){
                 JOptionPane.showConfirmDialog(null,"Email format is not good");
             }
         }
-        // Ŭ���̾�Ʈ�� �濡 ���ų� ���� ��, ������ ������Ʈ �Ѵ�.
+        // 클라이언트가 방에 들어가거나 나올 때, 대기실을 업데이트 한다.
         public void clientState(String message){
             String stateMessages[] = message.split(" ");
             String clientID = stateMessages[1];
             int from = Integer.parseInt(stateMessages[3]);
             int to = Integer.parseInt(stateMessages[5]);
-            // Ŭ���̾�Ʈ�� ���ӹ濡�� �ٸ� ������ �̵��� ��,
+            // 클라이언트가 게임방에서 다른 곳으로 이동할 때,
             if(from!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(from-1)).removePlayer(clientID);
             }
-            // Ŭ���̾�Ʈ�� ���ǿ��� �ٸ� ������ �̵��� ��,
+            // 클라이언트가 대기실에서 다른 곳으로 이동할 때,
             else{
                 for(int i=0;i<windows.waitRoom.clientIDs.size();i++){
                     if(windows.waitRoom.clientIDs.get(i).equals(clientID)){
@@ -1042,11 +1042,11 @@ class SimpleChatClient{
                     }
                 }
             }
-            // Ŭ���̾�Ʈ�� ���ӹ����� �̵��� ��,
+            // 클라이언트가 게임방으로 이동할 때,
             if(to!=0){
                 ((Room)windows.waitRoom.rooms.getComponent(to-1)).addPlayer(clientID);
             }
-            // Ŭ���̾�Ʈ�� ���Ƿ� �̵��� ��,
+            // 클라이언트가 대기실로 이동할 때,
             else{
                 windows.waitRoom.clientIDs.add(clientID);
             }
