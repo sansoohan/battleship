@@ -708,7 +708,7 @@ class LoginWindow extends LoginThema implements ActionListener{
     public void actionPerformed(ActionEvent ev){
         try {   
             windows.client.getWriter().println("/login "+idTextField.getText()+" "+passwdTextField.getText());
-            // windows.client.getWriter().flush();
+            windows.client.getWriter().flush();
         }catch (Exception ex) {ex.printStackTrace();}
         // Ŀ���� �ű��.
         passwdTextField.requestFocus();
