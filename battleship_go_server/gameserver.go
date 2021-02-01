@@ -112,8 +112,9 @@ func (gameClient *GameClient) GetClientName() string {
 }
 func (gameClient *GameClient) MessageController(message string) {
 	fmt.Printf(message)
-	if message[0] == "/"[0] {
-		command := strings.Split(strings.TrimSpace(message), " ")[0]
+	message = strings.TrimSpace(message)
+	if len(message) >= 1 && message[0] == "/"[0] {
+		command := strings.Split(message, " ")[0]
 		if gameClient.RoomNumber == 0 {
 			if command == "/make" {
 				gameClient.MakeRoom(message)
@@ -142,17 +143,18 @@ func (gameClient *GameClient) MessageController(message string) {
 	} else {
 		for _, client := range gameClient.gameServer.GameClients {
 			if gameClient.RoomNumber == client.RoomNumber {
-				client.MessageToClient(message)
+				client.MessageToClient(
+					fmt.Sprintf("%v : %v", gameClient.clientName, message),
+				)
 			}
 		}
 	}
 }
 func (gameClient *GameClient) MakeRoom(message string) {
-	selectedRoomNumber, err := strconv.Atoi(strings.Split(strings.TrimSpace(message), " ")[1])
+	selectedRoomNumber, err := strconv.Atoi(strings.Split(message, " ")[1])
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(gameClient.gameServer.GameRooms)
 	for _, gameRoom := range gameClient.gameServer.GameRooms {
 		if gameRoom.RoomNumber == selectedRoomNumber {
 			gameClient.MessageToClient(
@@ -186,11 +188,10 @@ func (gameClient *GameClient) MakeRoom(message string) {
 	}
 	gameClient.roomObserver = &newRoom
 	gameClient.gameServer.GameRooms = append(gameClient.gameServer.GameRooms, &newRoom)
-	fmt.Printf("%p\n", gameClient.gameServer.GameRooms)
 	return
 }
 func (gameClient *GameClient) JoinRoom(message string) {
-	selectedRoomNumber, err := strconv.Atoi(strings.Split(strings.TrimSpace(message), " ")[1])
+	selectedRoomNumber, err := strconv.Atoi(strings.Split(message, " ")[1])
 	if err != nil {
 		panic(err)
 	}
@@ -225,7 +226,7 @@ func (gameClient *GameClient) Test(message string) string {
 	return message
 }
 func (gameClient *GameClient) Login(message string) {
-	userLoginInput := strings.Split(strings.TrimSpace(message), " ")[1:]
+	userLoginInput := strings.Split(message, " ")[1:]
 	if len(userLoginInput) != 2 {
 		gameClient.MessageToClient("/login notentered")
 		return
@@ -277,7 +278,7 @@ func (gameClient *GameClient) Login(message string) {
 	gameClient.MessageToClient("/login mismatch")
 }
 func (gameClient *GameClient) NewAccount(message string) {
-	userSignUpInput := strings.Split(strings.TrimSpace(message), " ")[1:]
+	userSignUpInput := strings.Split(message, " ")[1:]
 	if _, err := os.Stat("userInfo"); os.IsNotExist(err) {
 		os.Mkdir("userInfo", 0755)
 	}
@@ -312,7 +313,7 @@ func (gameClient *GameClient) NewAccount(message string) {
 	gameClient.MessageToClient("/newaccount ok")
 }
 func (gameClient *GameClient) PasswdLost(message string) {
-	userPasswdLostInput := strings.Split(strings.TrimSpace(message), " ")[1:]
+	userPasswdLostInput := strings.Split(message, " ")[1:]
 	if _, err := os.Stat("userInfo"); os.IsNotExist(err) {
 		os.Mkdir("userInfo", 0755)
 	}
@@ -352,7 +353,6 @@ func (gameClient *GameClient) ReadyRoom(message string) {
 	}
 }
 func (gameClient *GameClient) LeaveRoom(message string) {
-	fmt.Println(gameClient.RoomNumber)
 	if len(gameClient.roomObserver.GamePlayers) != 0 {
 		gameClient.MessageToClient("You can't leave while playing")
 	} else {
@@ -418,15 +418,16 @@ func (gameClient *GameClient) StartTheGame(message string) {
 	}
 }
 func (gameClient *GameClient) FireOnMap(message string) {
-	firedTarget, err := strconv.Atoi(strings.Split(strings.TrimSpace(message), " ")[1])
+	firedTarget, err := strconv.Atoi(strings.Split(message, " ")[1])
 	if err != nil {
 		panic(err)
 	}
-	if len(gameClient.roomObserver.GamePlayers) != 0 {
+	if len(gameClient.roomObserver.GamePlayers) == 0 {
 		gameClient.MessageToClient("The game is not started")
+		return
 	}
 	thisTurnPlayer := gameClient.roomObserver.GamePlayers[gameClient.roomObserver.GetPlayerTurn()]
-	if &thisTurnPlayer.GameClient == &gameClient {
+	if thisTurnPlayer.GameClient == gameClient {
 		row := firedTarget / 7
 		col := firedTarget % 7
 		fireError := gameClient.HasFireError(row, col, thisTurnPlayer)
@@ -439,7 +440,6 @@ func (gameClient *GameClient) FireOnMap(message string) {
 				rowString[row],
 				colString[col],
 			)
-			fmt.Println(fireMessage)
 			gameClient.roomObserver.MessageToAllClients(fireMessage)
 			gameClient.roomObserver.FireMessageToAllPlayers(row, col)
 			gameClient.roomObserver.NextTurn()
@@ -480,7 +480,7 @@ func (gameRoom *GameRoomObserver) GetPlayerTurn() int {
 }
 func (gameRoom *GameRoomObserver) ConfigGameModel() {
 	fmt.Println("ConfigGameModel")
-	switch(len(gameRoom.GameClients)){
+	switch(len(gameRoom.GameClients)) {
 		case 2: gameRoom.shipNum = 1; gameRoom.shipLength = 1
 		case 3: gameRoom.shipNum = 3; gameRoom.shipLength = 3
 		case 4: gameRoom.shipNum = 2; gameRoom.shipLength = 3
@@ -524,6 +524,8 @@ func (gameRoom *GameRoomObserver) GenerateGameModel() {
 				PosX: make([]int, gameRoom.shipLength),
 				PosY: make([]int, gameRoom.shipLength),
 			}
+			newShip.SetPosition()
+			fmt.Println(shipCount)
 			if !newShip.HasCollision(gameRoom.GameShips) {
 				gameRoom.GameShips = append(gameRoom.GameShips, &newShip)
 				newPlayer.GameShips = append(newPlayer.GameShips, &newShip)
@@ -593,6 +595,7 @@ func (gameRoom *GameRoomObserver) NextPlayer() {
 	} else {
 		gameRoom.playerTurn += 1
 	}
+	fmt.Println(gameRoom.playerTurn)
 }
 func (gameRoom *GameRoomObserver) ResetGame() {
 	gameRoom.shipNum = 0
@@ -638,8 +641,6 @@ func (gameRoom *GameRoomObserver) FireMessageToAllPlayers(row int, col int) {
 }
 func (gameRoom *GameRoomObserver) RemoveGameClient(gameClient *GameClient) {
 	for k, v := range gameRoom.GameClients {
-		fmt.Println(gameClient.clientSocket)
-		fmt.Println(v.clientSocket)
 		if gameClient.clientSocket == v.clientSocket {
 			fmt.Println("Removed Client from room")
 			gameRoom.GameClients = append(
